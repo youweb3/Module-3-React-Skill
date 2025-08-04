@@ -5,14 +5,16 @@ const Lesson1Practical = () => {
   //const isDisabled = false; // Change to false to enable the button.
 
   //// useState to manage button disabled state
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false); //Starts with the button enabled (false means NOT disabled).
 
   //useState to toggle hove state
-  const [isHovered, seIsHovered] = useState(false);
+  const [isHovered, seIsHovered] = useState(false); //Tracks if mouse is over the button or not.
 
   //function to toggle isDisabled state
   const toggleDisabled = () => {
-    setIsDisabled((prev) => !prev);
+    setIsDisabled((prev) => !prev); //Flips isDisabled between true and false every time you click the button.
+    // /If isDisabled was true, this makes it false.
+    // /If isDisabled was false, this makes it true
   };
 
   //Style object for heading
@@ -36,30 +38,39 @@ const Lesson1Practical = () => {
 
   // Hover style
   const hoverStyle = {
-    backgroundColor: "#2980b9",
-    color: "#e0f7fa",
+    backgroundColor: "#c6f421ff",
+    color: "#011316ff",
   };
 
   // Combine styles
   const buttonStyle = {
     ...baseButtonStyle,
-    ...(isHovered ? hoverStyle : {}),
+    ...(isHovered ? hoverStyle : {}), //If isHovered is true, add hoverStyle. Otherwise, add nothing ({})”/
   };
 
   return (
-    <div style={{ border: "solid 1px blue", margin: "10px", padding: "10px" }}>
-      <h1 style={headingStyle}>
+    <div
+      style={{
+        border: "solid 1px blue",
+        margin: "10px",
+        padding: "10px",
+        backgroundColor: "red",
+      }}
+    >
+      <h1>Lesson 1: practical</h1>
+      <h2 style={headingStyle}>
         Style React heading with jsx style attributes
-      </h1>
+      </h2>
 
       <button
         style={buttonStyle}
-        disabled={isDisabled}
-        onClick={toggleDisabled}
-        onMouseEnter={() => seIsHovered(true)}
-        onMouseLeave={() => seIsHovered(false)}
-
-      >{isDisabled ? "Disabled (Click to Enable)" : "Enabled (Click to Disable)"}
+        onClick={toggleDisabled} //// Toggle disabled
+        onMouseEnter={() => seIsHovered(true)} ///Hover start
+        onMouseLeave={() => seIsHovered(false)} ///Hover end
+      >
+        {isDisabled
+          ? "Disabled (Click to Enable)"
+          : "Enabled (Click to Disable)"}
       </button>
     </div>
   );
