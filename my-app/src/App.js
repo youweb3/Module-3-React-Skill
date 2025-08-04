@@ -1,3 +1,4 @@
+import Lesson1Practical from "./Component/Lesson1Practical";
 import Lesson1StyleAttributes from "./Component/Lesson1StyleAttributes";
 import Lesson2EventStates from "./Component/Lesson2EventStates";
 import Lesson2PracticalActivity from "./Component/Lesson2PracticalActivity";
@@ -7,6 +8,7 @@ function App() {
   return (
     <div className="App">
       <Lesson1StyleAttributes/>
+      <Lesson1Practical/>
       <Lesson2EventStates/>
       <Lesson2PracticalActivity/>
       <Lesson3UseState/>
