@@ -3,6 +3,7 @@ import Lesson1StyleAttributes from "./Component/Lesson1StyleAttributes";
 import Lesson2EventStates from "./Component/Lesson2EventStates";
 import Lesson2PracticalActivity from "./Component/Lesson2PracticalActivity";
 import Lesson3UseState from "./Component/Lesson3UseState";
+import Lesson4StateAndHandling from "./Component/Lesson4StateAndHandling";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Lesson2EventStates/>
       <Lesson2PracticalActivity/>
       <Lesson3UseState/>
+      <Lesson4StateAndHandling/>
     </div>
   );
 }
