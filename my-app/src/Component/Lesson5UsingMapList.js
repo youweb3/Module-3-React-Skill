@@ -7,6 +7,19 @@ const Lesson5UsingMapList = () => {
     { id: 3, name: "Bot C", status: "Completed" },
   ]);
 
+  const [newBotName, setNewBotName] = useState("");
+
+  const handleAddBot = () => {
+    if (!newBotName.trim()) return; // avoid adding empty name
+    const newBot = {
+      id: bots.length + 1, //Simple ID generation (not ideal in real apps)
+      name: newBotName,
+      status: "Stopped",
+    };
+
+    setBots([...bots, newBot]);
+    setNewBotName(""); //clear input
+  };
 
   // const triggerJob = (id) => {
   //   const updateBots = bots.map ((bot) => {
@@ -20,7 +33,7 @@ const Lesson5UsingMapList = () => {
 
   //   setBots(updateBots);
   // }
-////////////////////////////////
+  ////////////////////////////////
   //version 1:
   // Use this approach when the condition is short and straightforward,
   // and you don't need to reuse the new value elsewhere.
@@ -72,6 +85,29 @@ const Lesson5UsingMapList = () => {
   return (
     <div style={{ border: "solid 1px black", margin: "10px", padding: "10px" }}>
       <h2>List of Bots</h2>
+      <div>
+        <h3>Add a new bot</h3>
+        {/* Without value, React has no control over the input content.The 
+  value of the input is always synced with the React 
+  Controlled input: 
+  - 'value' links input value to React state 
+  - 'onChange' updates state when user types 
+  Without these, input will not work properly or will be read-only */}
+
+  {/* 
+  'e' is the event object passed automatically by React.
+  'e.target' refers to the input element.
+  'e.target.value' gets the current text inside the input.
+*/}
+        <input
+          type="text"
+          placeholder="Enter bot name"
+          value={newBotName}
+          onChange={(e) => setNewBotName(e.target.value)}
+        ></input>
+        <button onClick={handleAddBot}>Add Bot</button>
+      </div>
+
       <ul>
         {bots.map((bot) => (
           <li key={bot.id}>
