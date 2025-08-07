@@ -4,6 +4,7 @@ import Lesson2EventStates from "./Component/Lesson2EventStates";
 import Lesson2PracticalActivity from "./Component/Lesson2PracticalActivity";
 import Lesson3UseState from "./Component/Lesson3UseState";
 import Lesson4StateAndHandling from "./Component/Lesson4StateAndHandling";
+import Lesson5UsingMapList from "./Component/Lesson5UsingMapList";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Lesson2PracticalActivity/>
       <Lesson3UseState/>
       <Lesson4StateAndHandling/>
+      <Lesson5UsingMapList/>
     </div>
   );
 }
