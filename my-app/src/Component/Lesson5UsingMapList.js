@@ -10,6 +10,7 @@ const Lesson5UsingMapList = () => {
   const [newBotName, setNewBotName] = useState("");
   const [statusFilter, setStatusFilter] = useState("All"); //// State to keep track of the selected status filter (default is "All")
 
+  // Function to add a new bot to the list
   const handleAddBot = () => {
     if (!newBotName.trim()) return; // avoid adding empty name
     const newBot = {
@@ -18,10 +19,11 @@ const Lesson5UsingMapList = () => {
       status: "Stopped",
     };
 
-    setBots([...bots, newBot]);
-    setNewBotName(""); //clear input
+    setBots([...bots, newBot]);// Add the new bot to the list
+    setNewBotName(""); //clear input after adding
   };
 
+    // Function to change status of a bot cyclically: Stopped -> Running -> Completed -> Stopped
   // const triggerJob = (id) => {
   //   const updateBots = bots.map ((bot) => {
   //     if(bot.id === id) {
@@ -83,24 +85,31 @@ const Lesson5UsingMapList = () => {
     setBots(updatedBots);
   };
 
-  // Delete button handler function
+  // Function to delete a bot from the list by id
   // This function filters out the bot with the given id and updates the state
   const deleteBot = (id) => {
     const updateBots = bots.filter((bot) => bot.id !== id); // Keep only bots that don't match the given id
     setBots(updateBots); // Update state with the new list
   };
 
-  // Filter the list of bots based on the selected filter value
+
+  // Function to sort bots alphabetically by their name
+  const handleSort = () => {
+      const sortedBots = [...bots].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      setBots(sortedBots);
+  };
+
+  // Filter bots based on status filter; if 'All', show all bots
   const filteredBots = statusFilter === 'All'
   ? bots
   : bots.filter((bot) => bot.status === statusFilter);
-
-  console.log('Status running JOseph' , statusFilter, filteredBots);
   
 
   return (
     <div style={{ border: "solid 1px black", margin: "10px", padding: "10px" }}>
       <h2>List of Bots</h2>
+
+      {/* Section to add a new bot */}
       <div>
         <h3>Add a new bot</h3>
         {/* Without value, React has no control over the input content.The 
@@ -124,6 +133,7 @@ const Lesson5UsingMapList = () => {
         <button onClick={handleAddBot}>Add Bot</button>
       </div>
 
+      {/* Section to filter bots by status */}
       <div style={{ marginBottom: "10px" }}>
         <label>Filter by status</label>
         {/* -Dropdown to filter bots based on their status
@@ -140,6 +150,10 @@ const Lesson5UsingMapList = () => {
         </select>
       </div>
 
+      {/* Button to sort bots by name */}
+      <button onClick={handleSort}>Sort and Storing</button>
+       
+       {/* List of bots after filtering and sorting */}
       <ul>
         {filteredBots.map((bot) => (
           <li key={bot.id}>
@@ -166,3 +180,31 @@ export default Lesson5UsingMapList;
 //     </li>
 //   ))}
 // </ul>
+
+
+/////////////////
+// handleAddBot:
+// - Adds a new bot with the entered name to the bots array.
+// - Prevents adding empty names by trimming the input.
+// - New bots start with status "Stopped".
+
+// triggerJob:
+// - Changes a bot's status in a cycle: Stopped -> Running -> Completed -> Stopped.
+// - Uses map to create a new array with updated bot status.
+
+// deleteBot:
+// - Removes a bot from the list by filtering out the bot with the specified id.
+
+// sortBotsByName:
+// - Sorts the bots array alphabetically by bot names using localeCompare.
+// - Uses a shallow copy of bots array to avoid mutating original state directly.
+
+// filteredBots:
+// - Filters bots based on the selected statusFilter.
+// - Shows all bots if statusFilter is "All".
+
+// The UI includes:
+// - Input + button to add bots.
+// - Dropdown select to filter bots by status.
+// - Button to sort bots by name.
+// - List of filtered (and sorted) bots with Trigger and Delete buttons.
