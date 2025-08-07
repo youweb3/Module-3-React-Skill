@@ -8,6 +8,7 @@ const Lesson5UsingMapList = () => {
   ]);
 
   const [newBotName, setNewBotName] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All"); //// State to keep track of the selected status filter (default is "All")
 
   const handleAddBot = () => {
     if (!newBotName.trim()) return; // avoid adding empty name
@@ -82,19 +83,34 @@ const Lesson5UsingMapList = () => {
     setBots(updatedBots);
   };
 
+  // Delete button handler function
+  // This function filters out the bot with the given id and updates the state
+  const deleteBot = (id) => {
+    const updateBots = bots.filter((bot) => bot.id !== id); // Keep only bots that don't match the given id
+    setBots(updateBots); // Update state with the new list
+  };
+
+  // Filter the list of bots based on the selected filter value
+  const filteredBots = statusFilter === 'All'
+  ? bots
+  : bots.filter((bot) => bot.status === statusFilter);
+
+  console.log('Status running JOseph' , statusFilter, filteredBots);
+  
+
   return (
     <div style={{ border: "solid 1px black", margin: "10px", padding: "10px" }}>
       <h2>List of Bots</h2>
       <div>
         <h3>Add a new bot</h3>
         {/* Without value, React has no control over the input content.The 
-  value of the input is always synced with the React 
-  Controlled input: 
-  - 'value' links input value to React state 
-  - 'onChange' updates state when user types 
-  Without these, input will not work properly or will be read-only */}
+        value of the input is always synced with the React 
+        Controlled input: 
+        - 'value' links input value to React state 
+        - 'onChange' updates state when user types 
+        Without these, input will not work properly or will be read-only */}
 
-  {/* 
+        {/* 
   'e' is the event object passed automatically by React.
   'e.target' refers to the input element.
   'e.target.value' gets the current text inside the input.
@@ -108,14 +124,32 @@ const Lesson5UsingMapList = () => {
         <button onClick={handleAddBot}>Add Bot</button>
       </div>
 
+      <div style={{ marginBottom: "10px" }}>
+        <label>Filter by status</label>
+        {/* -Dropdown to filter bots based on their status
+            -Updates the statusFilter state when a new option is selected */}
+        <select
+          id="filter"
+          value={statusFilter} // the selected value save inside state
+          onChange={(e) => setStatusFilter(e.target.value)} //update value
+        >
+          <option value="All">All</option>
+          <option value="Stopped">Stopped</option>
+          <option value="Running">Running</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
       <ul>
-        {bots.map((bot) => (
+        {filteredBots.map((bot) => (
           <li key={bot.id}>
             <strong>{bot.id}</strong> - {bot.name} -
             <span style={{ color: bot.status === "Done" ? "red" : "blue" }}>
               {bot.status}
             </span>
             <button onClick={() => triggerJob(bot.id)}>Trigger Job</button>
+            {/* Button to delete the bot from the list */}
+            <button onClick={() => deleteBot(bot.id)}>Delete</button>
           </li>
         ))}
       </ul>
