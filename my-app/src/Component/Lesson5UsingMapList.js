@@ -95,7 +95,7 @@ const Lesson5UsingMapList = () => {
 
   // Function to sort bots alphabetically by their name
   const handleSort = () => {
-      const sortedBots = [...bots].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      const sortedBots = [...bots].sort((a, b) => (a.name?.trim().toLowerCase() || '').localeCompare(b.name?.trim().toLowerCase() || ''));
       setBots(sortedBots);
   };
 
