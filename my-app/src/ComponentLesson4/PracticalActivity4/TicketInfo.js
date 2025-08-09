@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 
 // TicketInfo component to display information about each ticket status
@@ -8,6 +8,10 @@ import React from "react";
 // - children: the text passed between the component tags (e.g., "completed")
 // - count: number of tickets for that status
 const TicketInfo = ({ image, result, children, count }) => {
+
+  // State to track if details are shown or hidden
+  const [showDetails, setShowDetails]=useState(false);
+
 //// Variable to store background color based on the status (result)
   let bgColor ='';
   switch (result) {
@@ -24,9 +28,17 @@ const TicketInfo = ({ image, result, children, count }) => {
       bgColor = "white"; // Default white background if status unknown
   }
 
+  const toggleDetails = () => {
+    setShowDetails(prev => !prev);
+    //Here, prev is the previous value of showDetails (either true or false).
+    //If prev was false, !prev is true, so it switches from hidden to shown.
+    //If prev was true, !prev is false, so it switches from shown to hidden.
+  }
+
   return (
     // Container div styled as a card
     <div
+      onClick={toggleDetails}
       style={{
         border: "1px solid #ccc",
         padding: "15px",
@@ -44,8 +56,55 @@ const TicketInfo = ({ image, result, children, count }) => {
       <h3>{children}</h3>
        {/* Display the count of tickets */}
       <p>Count: {count}</p>
+
+ {/* Show this extra info only if showDetails is true */}
+      {showDetails && (
+        <div style={{marginTop: '10px', fontSize: '14px', color: '#333'}}>
+          <p>More details about {children} tickets...</p>
+           {/* Here we can add actual details or a list later */}
+        </div>
+      )}
     </div>
   );
 };
 
 export default TicketInfo;
+
+///click event for shows more datails:
+//If we want to show different details for each status,we can pass those details as a prop from the parent (StatusBoard) to each TicketInfo,
+// or define them inside TicketInfo based on the result prop.
+//For example, inside TicketInfo, you could do something like:
+
+// const detailsMap = {
+//   completed: "All tickets completed successfully.",
+//   in-progress: "Tickets are currently being worked on.",
+//   failed: "Tickets that failed need attention.",
+// };
+
+// ...
+
+// {showDetails && (
+//   <div style={{ marginTop: "10px", fontSize: "14px", color: "#333" }}>
+//     <p>{detailsMap[result]}</p>
+//   </div>
+// )}
+
+//////////////////////////////////////////
+// Or, you can pass a details prop from StatusBoard when rendering each TicketInfo
+
+// {/* <TicketInfo
+//       result="completed"
+//       image={completedImg}
+//       count={completedCount}
+//       details="This status shows all completed tickets."
+// >
+//   completed
+// </TicketInfo> */}
+
+// Then inside TicketInfo, render details instead of the generic text:
+// {showDetails && (
+//   <div style={{ marginTop: "10px", fontSize: "14px", color: "#333" }}>
+//     <p>{details}</p>
+//   </div>
+// )}
+//////////////////////////////////////////////////////
