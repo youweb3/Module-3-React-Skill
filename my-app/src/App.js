@@ -5,6 +5,7 @@ import Lesson2PracticalActivity from "./Component/Lesson2PracticalActivity";
 import Lesson3UseState from "./Component/Lesson3UseState";
 import Lesson4StateAndHandling from "./Component/Lesson4StateAndHandling";
 import Lesson5UsingMapList from "./Component/Lesson5UsingMapList";
+import StatusBoard from './ComponentLesson4/PracticalActivity4/StatusBoard'; // Module 4/ Lesson 4
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Lesson3UseState/>
       <Lesson4StateAndHandling/>
       <Lesson5UsingMapList/>
+      <StatusBoard />
     </div>
   );
 }
