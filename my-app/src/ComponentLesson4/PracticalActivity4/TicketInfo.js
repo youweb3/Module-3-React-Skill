@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 
-
 // TicketInfo component to display information about each ticket status
 // Props:
 // - image: image related to the status (e.g., completedImg)
 // - result: the status string to determine background color ("completed", "in-progress", "failed")
 // - children: the text passed between the component tags (e.g., "completed")
 // - count: number of tickets for that status
-const TicketInfo = ({ image, result, children, count }) => {
-
+const TicketInfo = ({ image, result, children, count, onAdd }) => {
   // State to track if details are shown or hidden
-  const [showDetails, setShowDetails]=useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
-//// Variable to store background color based on the status (result)
-  let bgColor ='';
+  //// Variable to store background color based on the status (result)
+  let bgColor = "";
   switch (result) {
     case "completed":
       bgColor = "lightgreen"; //// Light green for completed status
@@ -29,11 +27,11 @@ const TicketInfo = ({ image, result, children, count }) => {
   }
 
   const toggleDetails = () => {
-    setShowDetails(prev => !prev);
+    setShowDetails((prev) => !prev);
     //Here, prev is the previous value of showDetails (either true or false).
     //If prev was false, !prev is true, so it switches from hidden to shown.
     //If prev was true, !prev is false, so it switches from shown to hidden.
-  }
+  };
 
   return (
     // Container div styled as a card
@@ -49,21 +47,29 @@ const TicketInfo = ({ image, result, children, count }) => {
         backgroundColor: bgColor,
       }}
     >
-
       {/* Display the status image */}
       <img src={image} alt={children} width="50" />
-       {/* Display the status text passed as children */}
+      {/* Display the status text passed as children */}
       <h3>{children}</h3>
-       {/* Display the count of tickets */}
+      {/* Display the count of tickets */}
       <p>Count: {count}</p>
 
- {/* Show this extra info only if showDetails is true */}
+      {/* Show this extra info only if showDetails is true */}
       {showDetails && (
-        <div style={{marginTop: '10px', fontSize: '14px', color: '#333'}}>
+        <div style={{ marginTop: "10px", fontSize: "14px", color: "#333" }}>
           <p>More details about {children} tickets...</p>
-           {/* Here we can add actual details or a list later */}
+          {/* Here we can add actual details or a list later */}
         </div>
       )}
+
+      {/* Add Ticket Button */}
+      <button onClick={(event)=>{
+        event.stopPropagation();//// Prevent toggleDetails when clicking button
+        onAdd(); //call the add ticket function
+      }}
+      style={{ marginTop: "10px" }}>
+        Add Ticket
+      </button>
     </div>
   );
 };
