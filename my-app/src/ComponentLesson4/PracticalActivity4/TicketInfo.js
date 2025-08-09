@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // TicketInfo component to display information about each ticket status
 // Props:
@@ -7,8 +7,10 @@ import React, { useState } from "react";
 // - children: the text passed between the component tags (e.g., "completed")
 // - count: number of tickets for that status
 const TicketInfo = ({ image, result, children, count, onAdd }) => {
-  // State to track if details are shown or hidden
+  // State to track if details are shown or hidden when card is clicked
   const [showDetails, setShowDetails] = useState(false);
+  // State to trigger highlight animation
+  const [highlight, setHighlight] = useState(false); // new state for animation
 
   //// Variable to store background color based on the status (result)
   let bgColor = "";
@@ -25,6 +27,16 @@ const TicketInfo = ({ image, result, children, count, onAdd }) => {
     default:
       bgColor = "white"; // Default white background if status unknown
   }
+
+  //useEffect is used here to run code WHENEVER 'count' changes
+  useEffect(() => {
+    if (count > 0) {
+      // to avoid highlight on first render if count = 0
+      setHighlight(true); // Turn on highlight
+      const timer = setTimeout(() => setHighlight(false), 500); // highlight lasts 500ms
+      return () => clearTimeout(timer); //cleanup timer on unmount or next change
+    }
+  }, [count]); //runs whener 'count' changes
 
   const toggleDetails = () => {
     setShowDetails((prev) => !prev);
@@ -44,7 +56,8 @@ const TicketInfo = ({ image, result, children, count, onAdd }) => {
         width: "150px",
         textAlign: "center",
         borderRadius: "8px",
-        backgroundColor: bgColor,
+        backgroundColor: highlight ? "yellow" : bgColor, // Highlight overrides bgColor temporarily  yellow if highlight is active
+        transition: "background-color 0.5s ease", // Smooth transition
       }}
     >
       {/* Display the status image */}
@@ -63,11 +76,13 @@ const TicketInfo = ({ image, result, children, count, onAdd }) => {
       )}
 
       {/* Add Ticket Button */}
-      <button onClick={(event)=>{
-        event.stopPropagation();//// Prevent toggleDetails when clicking button
-        onAdd(); //call the add ticket function
-      }}
-      style={{ marginTop: "10px" }}>
+      <button
+        onClick={(event) => {
+          event.stopPropagation(); //// Prevent toggleDetails when clicking button
+          onAdd(); //call the add ticket function
+        }}
+        style={{ marginTop: "10px" }}
+      >
         Add Ticket
       </button>
     </div>
