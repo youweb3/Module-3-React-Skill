@@ -14,6 +14,9 @@ const DynamicBotManager = () => {
   //statet for error message
   const [error, setError] = useState("");
 
+  // Track which bot is being edited
+  const [editingBotId, setEditingBotId] = useState(null);
+
   // Handle input changes for all input fields dynamically
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +26,12 @@ const DynamicBotManager = () => {
       [name]: value, // Update only the changed input field based on its "name" attribute
     }));
     setError(""); //clear error on input change
+  };
+
+  //when clicking edit, load bot info into form and set editinBotId
+  const editBot = (bot) => {
+    setNewBot (bot);
+    setEditingBotId(bot.id);
   };
 
   // Add a new bot to the bots list after validation
@@ -35,9 +44,18 @@ const DynamicBotManager = () => {
       return;
     }
 
+    if (editingBotId){
+        //save change
+        setBots((prevBots)=>
+        prevBots.map((bot) => (bot.id === editingBotId ? newBot : bot))
+        );
+
+        setEditingBotId(null); //reset editing state
+    }else {
     // Add the new bot to the existing bots array (using spread operator)
     setBots((prevBots) => [...prevBots, newBot]);
     // Clear the input fields after adding the bot
+    }
     setNewBot({ id: "", name: "", status: "" });
     setError("");
   };
@@ -63,6 +81,7 @@ const DynamicBotManager = () => {
         placeholder="Put ID heare"
         value={newBot.id}
         onChange={handleInputChange}
+        disabled = {editingBotId !==null}
       />
       <input
         type="text"
@@ -79,8 +98,8 @@ const DynamicBotManager = () => {
         onChange={handleInputChange}
       />
 
-      <button onClick={addBotToList} disabled={!isFormValid}>
-        Add Data
+      <button onClick={addBotToList} disabled={!isFormValid()}>
+        {editingBotId ? 'save changes' : 'Add Data'}
       </button>
 
       {/* Display error message */}
@@ -91,7 +110,8 @@ const DynamicBotManager = () => {
         {/* Map over bots array to display each bot */}
         {bots.map((bot) => (
           <li key={bot.id}>
-            {bot.id} {bot.name} {bot.status}
+            {bot.id} {bot.name} {bot.status} {''}
+            <button onClick={() => editBot(bot)}>Edit</button>
             <button onClick={() => deleteBot(bot.id)}>Delete Data</button>
           </li>
         ))}
