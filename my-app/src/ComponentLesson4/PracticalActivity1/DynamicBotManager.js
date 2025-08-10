@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,} from "react";
 
 const DynamicBotManager = () => {
   // State to store the list of bots
@@ -16,6 +16,8 @@ const DynamicBotManager = () => {
 
   // Track which bot is being edited
   const [editingBotId, setEditingBotId] = useState(null);
+  // Search term
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Handle input changes for all input fields dynamically
   const handleInputChange = (e) => {
@@ -28,12 +30,14 @@ const DynamicBotManager = () => {
     setError(""); //clear error on input change
   };
 
-  //when clicking edit, load bot info into form and set editinBotId
+  // Handle edit
+  // when clicking edit, load bot info into form and set editinBotId
   const editBot = (bot) => {
-    setNewBot (bot);
+    setNewBot(bot);
     setEditingBotId(bot.id);
   };
 
+  //Add or save bot
   // Add a new bot to the bots list after validation
   const addBotToList = () => {
     const { id, name, status } = newBot;
@@ -41,22 +45,31 @@ const DynamicBotManager = () => {
     // Validate that all fields are filled (trim removes whitespace)
     if (!id.trim() || !name.trim() || !status.trim()) {
       setError("Please fill all fields");
+
+      return;
+
+    } else if (editingBotId) {
+      //save change
+      setBots((prevBots) =>
+        prevBots.map((bot) => (bot.id === editingBotId ? newBot : bot))
+      );
+
+      setEditingBotId(null); //reset editing state
+      setNewBot({ id: "", name: "", status: "" });
+      setSearchTerm('');
+      setError("");
+      return;
+
+    } else if (bots.some((bot) => bot.id === id)) {
+      setError("This ID already Exists!");
       return;
     }
 
-    if (editingBotId){
-        //save change
-        setBots((prevBots)=>
-        prevBots.map((bot) => (bot.id === editingBotId ? newBot : bot))
-        );
-
-        setEditingBotId(null); //reset editing state
-    }else {
     // Add the new bot to the existing bots array (using spread operator)
     setBots((prevBots) => [...prevBots, newBot]);
     // Clear the input fields after adding the bot
-    }
     setNewBot({ id: "", name: "", status: "" });
+    setSearchTerm('');
     setError("");
   };
 
@@ -72,16 +85,16 @@ const DynamicBotManager = () => {
   };
 
   return (
-    <div>
+    <div style={{border:'solid 2px blue', margin: '10px', padding:'15px'}}>
       <h1>Module 4 Lesson 1</h1>
       <h2>Dynamic Bot Manager</h2>
       <input
         type="text"
         name="id"
-        placeholder="Put ID heare"
+        placeholder="Put ID here"
         value={newBot.id}
         onChange={handleInputChange}
-        disabled = {editingBotId !==null}
+        disabled={editingBotId !== null}
       />
       <input
         type="text"
@@ -99,22 +112,40 @@ const DynamicBotManager = () => {
       />
 
       <button onClick={addBotToList} disabled={!isFormValid()}>
-        {editingBotId ? 'save changes' : 'Add Data'}
+        {editingBotId ? "save changes" : "Add Data"}
       </button>
 
       {/* Display error message */}
       {error && <p style={{ color: "red" }}> {error}</p>}
 
+      {/* search field */}
+      <input
+        type="text"
+        placeholder="search by name or status"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{ marginTop: "20px", display: "block" }}
+      />
+
       <h3>Bot List</h3>
       <ul>
         {/* Map over bots array to display each bot */}
-        {bots.map((bot) => (
-          <li key={bot.id}>
-            {bot.id} {bot.name} {bot.status} {''}
-            <button onClick={() => editBot(bot)}>Edit</button>
-            <button onClick={() => deleteBot(bot.id)}>Delete Data</button>
-          </li>
-        ))}
+        {bots
+          .filter((bot) => {
+            if (!searchTerm.trim()) return true;
+            return (
+              String(bot.id).toLowerCase().includes(searchTerm.toLowerCase()) ||
+              bot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              bot.status.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+          })
+          .map((bot) => (
+            <li key={bot.id}>
+              {bot.id} {bot.name} {bot.status} {""}
+              <button onClick={() => editBot(bot)}>Edit</button>
+              <button onClick={() => deleteBot(bot.id)}>Delete Data</button>
+            </li>
+          ))}
       </ul>
     </div>
   );
