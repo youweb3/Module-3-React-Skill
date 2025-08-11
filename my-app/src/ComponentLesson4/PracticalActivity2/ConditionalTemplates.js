@@ -7,12 +7,16 @@ const ConditionalTemplates = () => {
     { id: 3, name: "AliMohammad", status: "Mechanic" },
   ]);
 
+  const [newBots, setNewBot] = useState({ id: "", name: "", status: "" });
+  const [error, setError] = useState(""); // to display the error message here
+  const [show, setShow] = useState(false);
+
+  // Remove bot by ID
   const handleRemove = (id) => {
     setBots(bots.filter((bot) => bot.id !== id));
   };
 
-  const [newBots, setNewBot] = useState({ id: "", name: "", status: "" });
-
+  // Add new bot after validation
   const addItem = () => {
     // Convert id string to number
     const numericId = Number(newBots.id);
@@ -23,43 +27,46 @@ const ConditionalTemplates = () => {
     //   alert("This ID already exists!");
     //   return;
     // }
-    //check if if id already exists in the bots list
+    //check for duplicate ID
     if (bots.some((bot) => bot.id === numericId)) {
-      alert("ID already exist!");
+      setError("ID already exist!");
       return; // Stop function execution to prevent duplicate id insertion
     }
 
-    // Validate input fields
-    // !isNaN(value) means: The value is a number.
-    // isNaN(value) means: The value is not a number.
+    // Validate inputs: ID must be number, name and status non-empty
     if (
-      !isNaN(numericId) &&
+      !isNaN(numericId) && ///// !isNaN(value) means: The value is a number.//// isNaN(value) means: The value is not a number.
       newBots.name.trim() !== "" &&
       newBots.status.trim() !== ""
     ) {
       setBots([...bots, { ...newBots, id: numericId }]); //Add new bot to the list with numeric id
       setNewBot({ id: "", name: "", status: "" }); //reset input
+      setError("");
     } else {
-      alert("please enter a valid numeric ID and fill all fields"); ////Alert user if validation fails
+      setError("Please enter a valid numeric ID and fill all fields."); ////Alert user if validation fails
     }
   };
-
-  const [show, setShow] = useState(false);
 
   return (
     <div style={{ border: "solid 2px red", padding: "10px", margin: "10px" }}>
       <h1>module 4/ Lesson 2 Practice</h1>
-      <ul>
-        <button onClick={ () => setShow(!show)}>Show details</button>
-        {show && bots.map((bot) => (
-          <li key={bot.id}>
-            {bot.id} {bot.name} {bot.status}
-            <button onClick={() => handleRemove(bot.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
 
-      <br></br>
+      <button onClick={() => setShow(!show)}>
+        {show ? "Hide Details" : "show details"}
+      </button>
+
+      {show && (
+        <ul>
+          {bots.map((bot) => (
+            <li key={bot.id}>
+              {bot.id} {bot.name} {bot.status}
+              <button onClick={() => handleRemove(bot.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <br/>
 
       <input
         type="number"
@@ -80,6 +87,8 @@ const ConditionalTemplates = () => {
         onChange={(e) => setNewBot({ ...newBots, status: e.target.value })}
       />
       <button onClick={addItem}>Add Item</button>
+
+      {error && <div style={{ color: "red", marginTop: "5px" }}> {error} </div>}
     </div>
   );
 };
