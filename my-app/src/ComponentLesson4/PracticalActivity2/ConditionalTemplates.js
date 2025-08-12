@@ -14,6 +14,7 @@ const ConditionalTemplates = () => {
   const [newBot, setNewBot] = useState({ id: "", name: "", status: "" });
   const [error, setError] = useState(""); // to display the error message here
   const [show, setShow] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
 
   // Remove bot by ID
   const handleRemove = (id) => {
@@ -51,15 +52,30 @@ const ConditionalTemplates = () => {
     }
   };
 
+  //Search Item
+  const searchedBots = () => {
+    return bots.filter(bot =>
+      bot.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+       bot.status.toLowerCase().includes(searchItem.toLowerCase())
+    );
+  };
+
   return (
     <div style={{ border: "solid 2px red", padding: "10px", margin: "10px" }}>
       <Header />
+
+      <input
+        type="text"
+        placeholder="Search by name or status"
+        value={searchItem}
+        onChange={(e) => setSearchItem(e.target.value)}
+      />
 
       <button onClick={() => setShow(!show)}>
         {show ? "Hide Details" : "show details"}
       </button>
 
-      {show && <JobList bots={bots} onDelete={handleRemove} />}
+      {show && <JobList bots={searchedBots()} onDelete={handleRemove} />}
 
       <AddJobForm
         newBot={newBot}
@@ -69,7 +85,6 @@ const ConditionalTemplates = () => {
       />
 
       <Footer />
-
     </div>
   );
 };
