@@ -31,7 +31,7 @@ const StatusBoard = () => {
         margin: "10px",
       }}
     >
-      <h1 style={{ backgroundColor: "blue" }}>Module 4, Lesson 1</h1>
+      <h1 style={{ backgroundColor: "blue" }}>Module 4, Lesson 4</h1>
 
       {/* Flex container to arrange TicketInfo components side-by-side */}
       <div
