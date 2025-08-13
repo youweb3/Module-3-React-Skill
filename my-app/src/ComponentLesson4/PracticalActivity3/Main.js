@@ -3,6 +3,7 @@ import JobList from './JobList';
 import AddJob from './AddJob';
 
 const Main = () => {
+    // Initial job list
     const[jobs, setJobs] = useState([
         {id:1, name:'Frontend Developer', status:'open'},
         {id:2, name:'Backend Developer', status:'closed'},
@@ -18,6 +19,9 @@ const Main = () => {
   const [newJobName, setNewJobName] = useState('');
   const [newJobStatus, setNewJobStatus] = useState('open'); // default status
 
+  const [error, setError] = useState('');
+
+  // Add a new job to the list
     const handleDeleteJob = (id) => {
         // Using prevJobs callback to make sure we always have latest state
         setJobs(prevJobs => prevJobs.filter(job => job.id !== id));
@@ -26,13 +30,15 @@ const Main = () => {
 
     //Add New job
     const handleAddJob = () => {
-        if (newJobName.trimEnd() === '') return; //Prevent adding empty names
+        if (newJobName.trim() === '') {
+            setError ('Job name cannot be empty!')
+            return; //Prevent adding empty names
+        }
+        setError('');
 
         //Auto-generate the next ID
         const nextId = jobs.length > 0 ? Math.max(...jobs.map(j => j.id)) + 1 : 1;
-
         //Add the new job to the list
-
         setJobs(prevJobs => [...prevJobs, {id: nextId, name: newJobName, status: newJobStatus}]);
 
         //Reset the input fields
@@ -63,6 +69,7 @@ const Main = () => {
         newJobStatus={newJobStatus}
         setNewJobStatus={setNewJobStatus}
         handleAddJob={handleAddJob}
+        error={error}
        />
 
         {/* <input type='number' placeholder='Enter ID here' value={addNewJob.id} onChange={(e) => setAddNewJob({...addNewJob, id: e.target.value})}/> */}

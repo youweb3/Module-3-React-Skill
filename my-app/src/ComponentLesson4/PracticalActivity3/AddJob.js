@@ -1,9 +1,16 @@
 import React from 'react'
 
-const AddJob = ({newJobName, setNewJobName, newJobStatus, setNewJobStatus, handleAddJob}) => {
+const AddJob = ({
+  newJobName = '', 
+  setNewJobName =() => {}, 
+  newJobStatus = 'open',
+  setNewJobStatus = () => {},
+  handleAddJob = ()=> {},
+  error
+ }) => {
   return (
     <div>
-      <input type='text' placeholder='Enter Job Nmae' value={newJobName} onChange={(e) => setNewJobName(e.target.value)}/>
+      <input type='text' placeholder='Enter Job Name' value={newJobName} onChange={(e) => setNewJobName(e.target.value)}/>
       <select value={newJobStatus} onChange={(e) => setNewJobStatus(e.target.value)}>
         <option value={'open'}>Open</option>
         <option value={'closed'}>Closed</option>
@@ -11,8 +18,16 @@ const AddJob = ({newJobName, setNewJobName, newJobStatus, setNewJobStatus, handl
 
       <button onClick={handleAddJob}>Add New Job</button>
 
+       {error && <p style={{color: 'red'}}>{error}</p>}
     </div>
   )
 }
 
 export default AddJob
+
+////// Default value for props to prevent crashes.
+  // newJobName = '', 
+  // setNewJobName =() => {}, 
+  // newJobStatus = 'open',
+  // setNewJobStatus = () => {},
+  // handleAddJob = ()=> {}

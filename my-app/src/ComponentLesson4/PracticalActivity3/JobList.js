@@ -1,7 +1,10 @@
 import React from "react";
 import JobItem from "./JobItem";
 
-const JobList = ({ jobs, onDeleteJob }) => {
+// JobList now has default values for props to prevent crashes
+const JobList = ({ jobs =[], onDeleteJob = () => {} }) => {
+  //If jobs is empty, display a message
+  if (!jobs.length) return <p>No jobs available</p>;
   return (
     <div>
       <ul>
@@ -14,3 +17,8 @@ const JobList = ({ jobs, onDeleteJob }) => {
 };
 
 export default JobList;
+
+
+// Safety check: Before rendering the list of jobs, we ensure that the `jobs` prop exists.
+// This prevents runtime errors (crashes) in case `jobs` is undefined or null.
+// It's a common pattern in React to avoid trying to map over undefined values.

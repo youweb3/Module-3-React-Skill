@@ -1,6 +1,7 @@
 import React from 'react'
 
-const JobItem = ({job, onDeleteJob}) => {
+//// Default value for props to prevent crashes.
+const JobItem = ({job = {id:0, name: 'Unknown', status: 'unknown'}, onDeleteJob = () => {} }) => {
   return (
     <div>
         <li>
@@ -12,3 +13,6 @@ const JobItem = ({job, onDeleteJob}) => {
 }
 
 export default JobItem
+
+//job = { id: 0, name: "Unknown", status: "unknown" } causes default information to be displayed if no job is given.
+//onDeleteJob = () => {} also prevents an error if the function is not given.
