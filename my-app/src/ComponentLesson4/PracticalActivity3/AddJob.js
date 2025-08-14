@@ -6,17 +6,20 @@ const AddJob = ({
   newJobStatus = 'open',
   setNewJobStatus = () => {},
   handleAddJob = ()=> {},
-  error
+  error,
+  isEditing
  }) => {
   return (
-    <div>
+    <div style={{marginTop:'20px', marginLeft:'25px'}}>
       <input type='text' placeholder='Enter Job Name' value={newJobName} onChange={(e) => setNewJobName(e.target.value)}/>
       <select value={newJobStatus} onChange={(e) => setNewJobStatus(e.target.value)}>
         <option value={'open'}>Open</option>
         <option value={'closed'}>Closed</option>
       </select>
 
-      <button onClick={handleAddJob}>Add New Job</button>
+      <button style={{marginLeft:'15px', marginBottom:'10px'}} onClick={handleAddJob}>
+        {isEditing ? 'Save Change' : 'Add New Job'}
+        </button>
 
        {error && <p style={{color: 'red'}}>{error}</p>}
     </div>

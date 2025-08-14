@@ -19,7 +19,9 @@ const Main = () => {
   const [newJobName, setNewJobName] = useState('');
   const [newJobStatus, setNewJobStatus] = useState('open'); // default status
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState(''); //error state
+  const [editingJobId, setEditingJobId] = useState(null); // state for edit 
+  const [message, setMessage] = useState (''); //state for edit message
 
   // Add a new job to the list
     const handleDeleteJob = (id) => {
@@ -36,15 +38,38 @@ const Main = () => {
         }
         setError('');
 
-        //Auto-generate the next ID
-        const nextId = jobs.length > 0 ? Math.max(...jobs.map(j => j.id)) + 1 : 1;
-        //Add the new job to the list
-        setJobs(prevJobs => [...prevJobs, {id: nextId, name: newJobName, status: newJobStatus}]);
+        if(editingJobId !==null) {
+            //editing existing job
+            setJobs(prevJobs => prevJobs.map(job => 
+                job.id === editingJobId
+                ? {...job, name: newJobName, status: newJobStatus}
+                :job)
+            );
+            setMessage('Job updated successfully!');
+            setEditingJobId(null); //exit edit mode
+        } else{
+            //Auto-generate the next ID
+            const nextId = jobs.length > 0 ? Math.max(...jobs.map(j => j.id)) + 1 : 1;
+            setJobs(prevJobs => [...prevJobs, {id: nextId, name: newJobName, status: newJobStatus}]);//Add the new job to the list
+            setMessage('Job added successfully!');
+        }
 
         //Reset the input fields
         setNewJobName('');
         setNewJobStatus('open'); // reset to default
+
+        //show message
+        setTimeout(() => setMessage(''), 3000);
     }
+
+       const handleEditJob = (job) => {
+        setNewJobName(job.name);
+        setNewJobStatus(job.status);
+        setEditingJobId(job.id);
+        setMessage('Editing mode activated!');
+        setTimeout(() => setMessage(''), 1000);
+    };
+
     // const handleAddJob = () =>{
     //     if( 
     //      addNewJob.id.trim() !== '' &&
@@ -61,7 +86,9 @@ const Main = () => {
     <div style={{border:'solid 2px black', paddingLeft: '10px', margin:'10px'}}>
         <h1>Module 4/ Lesson 3</h1>
 
-        <JobList jobs={jobs} onDeleteJob={handleDeleteJob}/>
+        {message && <div style={{color:'green', margin:'10px 0'}}>{message}</div>}
+
+        <JobList jobs={jobs} onDeleteJob={handleDeleteJob} onEditJob={handleEditJob}/>
 
        <AddJob
         newJobName={newJobName}
@@ -70,6 +97,7 @@ const Main = () => {
         setNewJobStatus={setNewJobStatus}
         handleAddJob={handleAddJob}
         error={error}
+        isEditing ={editingJobId !== null}// pass edit mode
        />
 
         {/* <input type='number' placeholder='Enter ID here' value={addNewJob.id} onChange={(e) => setAddNewJob({...addNewJob, id: e.target.value})}/> */}

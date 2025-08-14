@@ -2,14 +2,14 @@ import React from "react";
 import JobItem from "./JobItem";
 
 // JobList now has default values for props to prevent crashes
-const JobList = ({ jobs =[], onDeleteJob = () => {} }) => {
+const JobList = ({ jobs =[], onDeleteJob = () => {}, onEditJob = () =>{} }) => {
   //If jobs is empty, display a message
   if (!jobs.length) return <p>No jobs available</p>;
   return (
     <div>
       <ul>
         {jobs.map((job) => (
-         <JobItem key={job.id} job={job} onDeleteJob={onDeleteJob}/>
+         <JobItem key={job.id} job={job} onDeleteJob={onDeleteJob} onEditJob={onEditJob}/>
         ))}
       </ul>
     </div>
