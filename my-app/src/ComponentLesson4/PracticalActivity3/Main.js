@@ -22,6 +22,7 @@ const Main = () => {
   const [error, setError] = useState(''); //error state
   const [editingJobId, setEditingJobId] = useState(null); // state for edit 
   const [message, setMessage] = useState (''); //state for edit message
+  const [filterStatus, setFilterStatus] = useState('all');// possible values: 'all', 'open', 'closed'
 
   // Add a new job to the list
     const handleDeleteJob = (id) => {
@@ -70,6 +71,12 @@ const Main = () => {
         setTimeout(() => setMessage(''), 1000);
     };
 
+    //filter jobs based on selected status
+    const filterJobs = jobs.filter(job => {
+        if (filterStatus === 'all') return true; //show all jobs
+        return job.status === filterStatus; // show only matching status
+    });
+
     // const handleAddJob = () =>{
     //     if( 
     //      addNewJob.id.trim() !== '' &&
@@ -88,7 +95,16 @@ const Main = () => {
 
         {message && <div style={{color:'green', margin:'10px 0'}}>{message}</div>}
 
-        <JobList jobs={jobs} onDeleteJob={handleDeleteJob} onEditJob={handleEditJob}/>
+        <div style={{ margin: '10px 0' }}>
+           <label>Filter by Status: </label>
+            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+                <option value="all">All</option>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+            </select>
+        </div>
+
+        <JobList jobs={filterJobs} onDeleteJob={handleDeleteJob} onEditJob={handleEditJob}/>
 
        <AddJob
         newJobName={newJobName}
