@@ -1,0 +1,52 @@
+.job-form{
+    border: solid 2px green;
+    margin: 10px;
+    padding: 15px;
+    background-color: aqua;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.job-title, .job-status {
+    width: 100%;
+    border: 1px solid red;
+    box-sizing: border-box;
+}
+
+.category-buttons { 
+    display: flex;
+    gap: 6px;
+}
+
+.category-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.category-btn:hover {
+    background-color:#738774 ;
+}
+
+.submit-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color:#4caf50 ;
+    color: white;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color:#738774 ;
+}

@@ -8,8 +8,9 @@ import Lesson5UsingMapList from "./Component/Lesson5UsingMapList";
 import AddAndRemoveElements from "./ComponentLesson4/PracticalActivity1/AddAndRemoveElements";
 import DynamicBotManager from "./ComponentLesson4/PracticalActivity1/DynamicBotManager";// Module 4/ Lesson 1
 import ConditionalTemplates from "./ComponentLesson4/PracticalActivity2/ConditionalTemplates";//Module 4 /Lesson2
-import Main from "./ComponentLesson4/PracticalActivity3/Main";
+import Main from "./ComponentLesson4/PracticalActivity3/Main";// Module 4/ Lesson 3
 import StatusBoard from './ComponentLesson4/PracticalActivity4/StatusBoard'; // Module 4/ Lesson 4
+import JobForm from "./ComponentModule5/Lesson1/JobForm";// Module 5/ Lesson 1
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <ConditionalTemplates/>
       <Main/>
       <StatusBoard />
+      <JobForm/>
     </div>
   );
 }
