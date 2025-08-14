@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./JobForm.css";
+import { JobTitleInput, JobCategoryButtons, JobStatusSelect, SubmitButton } from '../../ComponentModule5/Lesson1';
 
 const JobForm = () => {
   const [jobTitle, setJobTitle] = useState("");
@@ -31,48 +32,14 @@ const JobForm = () => {
 
     <form className="job-form" onSubmit={handleSubmit}>
        {error && <p className="error-message">{error}</p>}
-      <div className="form-group">
-        <label>Job Title</label>
-        <input
-          type="text"
-          className="job-title"
-          placeholder="Enter Job Title"
-          value={jobTitle}
-          onChange={(e) => {setJobTitle(e.target.value)
-            console.log('Job Title:', e.target.value);
-          }}
-        />
-        <p>Current Title: {jobTitle}</p>
-      </div>
 
-      <div className="form-group">
-        <label>Job Category:</label>
-        <div className="category-buttons">
-          <button type="button" className="category-btn" onClick={()=> {setJobCategory('Emails'); console.log('selected category:', 'Emails');}}>
-            Emails
-          </button>
-          <button type="button" className="category-btn" onClick={()=> setJobCategory('Parsing')}>
-            Parsing
-          </button>
-          <button type="button" className="category-btn" onClick={()=> setJobCategory('Send Emails')}>
-            Send Emails
-          </button>
-        </div>
-        <p>Selected Caregory: {jobCategory}</p>
-      </div>
+       <JobTitleInput jobTitle={jobTitle} setJobTitle={setJobTitle}/>
 
-      <div className="form-group">
-        <label>Job Status:</label>
-        <select className="job-status" value={jobStatus} onChange={(e) => setJobStatus(e.target.value)}>
-          <option value='Pending'>Pending</option>
-          <option value='In Progress'>In Progress</option>
-          <option value='Completed'>Completed</option>
-        </select>
-        <p>select Status: {jobStatus}</p>
-      </div>
-      <button type="submit" className="submit-btn">
-        Add Job
-      </button>
+       <JobCategoryButtons jobCategory={jobCategory} setJobCategory={setJobCategory}/>
+
+       <JobStatusSelect jobStatus={jobStatus} setJobStatus={setJobStatus}/>
+       
+       <SubmitButton/>
     </form>
   );
 };
