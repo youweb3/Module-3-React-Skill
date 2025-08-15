@@ -1,0 +1,22 @@
+
+.job-columns-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: solid 2px red;
+    padding: 10px;
+    margin: 10px;
+    background-color: antiquewhite;
+}
+
+@media (max-width: 600px) {
+  .job-columns-container {
+    flex-direction: column; 
+    gap: 15px;
+  }
+
+  .job-column {
+    max-width: 100%;
+  }
+}
