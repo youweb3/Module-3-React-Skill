@@ -10,7 +10,7 @@ const JobManagement = () => {
   const [addNewJob, setAddNewJob] = useState('');
 
   const handleAdded = () => {
-    if (addNewJob.trim() === '') 
+    if (addNewJob.trim() === '')
       // { console.log('empty');
       return;
     const newJob = {
@@ -19,13 +19,23 @@ const JobManagement = () => {
       status: 'Need to Start'
     };
     // console.log('new job', newJob);
-    
+
     setJobs([...jobs, newJob]);
     setAddNewJob('');
   }
 
   const deleteJob = (id) => {
     setJobs(jobs.filter((job) => job.id !== id));
+  };
+
+
+  const updateJubStatus = (id, newStatus) => {
+    // console.log('JOB ID', id, 'is:', newStatus);
+    setJobs(
+      jobs.map(job =>
+        job.id === id ? { ...job, status: newStatus } : job
+      )
+    );
   };
 
   return (
@@ -39,6 +49,13 @@ const JobManagement = () => {
         <ul>
           {jobs.map((job) =>
             <li key={job.id}>{job.id}- {job.title} - ({job.status})
+
+              <select value={job.status} onChange={(e) => updateJubStatus(job.id, e.target.value)}>
+                <option value='Need to Start'>Need to Start</option>
+                <option value='In Progress'>In Progress</option>
+                <option value='Completed'>Completed</option>
+              </select>
+
               <button onClick={() => deleteJob(job.id)}>DeleteJob</button>
             </li>
           )}
