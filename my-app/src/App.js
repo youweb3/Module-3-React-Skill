@@ -11,7 +11,8 @@ import ConditionalTemplates from "./ComponentLesson4/PracticalActivity2/Conditio
 import Main from "./ComponentLesson4/PracticalActivity3/Main";// Module 4/ Lesson 3
 import StatusBoard from './ComponentLesson4/PracticalActivity4/StatusBoard'; // Module 4/ Lesson 4
 import JobForm from "./ComponentModule5/Lesson1/JobForm";// Module 5/ Lesson 1
-import MainJob from "./ComponentModule5/Lesson3/MainJob";
+import MainJob from "./ComponentModule5/Lesson3/MainJob";// Module 5/ Lesson 3
+import JobManagement from "./ComponentModule5/Lesson4/JobManagement"; //Module 5/ Lesson 4
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <StatusBoard />
       <JobForm/>
       <MainJob/>
+      <JobManagement/>
     </div>
   );
 }
