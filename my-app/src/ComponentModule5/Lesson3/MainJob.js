@@ -6,9 +6,15 @@ import AddJobForm from './AddJobForm';
 const MainJob = () => {
     const [jobs, setJobs] = useState([
         { id: 1, title: 'A', status: 'Need to Start' },
-        { id: 2, title: 'B', status: 'In Progress' },
-        { id: 3, title: 'C', status: 'Completed' },
+        { id: 2, title: 'B', status: 'Need to Start' },
+        { id: 3, title: 'C', status: 'Need to Start' },
     ]);
+
+    const [searchJobTerm, setSearchJobTerm] = useState('');
+
+    const handleSearch = (term) => setSearchJobTerm(term);
+
+    const filteredJobs = jobs.filter(job => job.title.toLowerCase().includes(searchJobTerm.toLowerCase()));
 
     const handleMoveJob = (id) => {
         setJobs(prevJobs => prevJobs.map(job => {
@@ -25,6 +31,14 @@ const MainJob = () => {
         <div style={{border:'solid 1px red', margin:'10px', padding:'5px'}}>
             <h1>Module 5/ Lesson 3</h1>
 
+            <input
+                type="text"
+                placeholder="Search Jobs"
+                value={searchJobTerm}
+                onChange={(e) => handleSearch(e.target.value)}
+                style={{ marginBottom: '10px', padding: '5px', width: '200px' }}
+            />
+
             <AddJobForm onAddJob={(newJob) => setJobs(prev => [...prev, newJob])}/>
 
             <div className='job-columns-container'>
@@ -32,20 +46,22 @@ const MainJob = () => {
                     title='Need to Start'
                     image="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/396e9/MainBefore.jpg"
                     alt='Job Image'
-                    jobs={jobs.filter(job => job.status === 'Need to Start')}
+                    jobs={filteredJobs.filter(job => job.status === 'Need to Start')}
                     onMoveJob={handleMoveJob}
+
                 />
 
                 <JobColumn
-                    title='In progress'
-                    jobs={jobs.filter(job => job.status === 'In Progress')}
+                    title='In Progress'
+                    jobs={filteredJobs.filter(job => job.status === 'In Progress')}
                     onMoveJob={handleMoveJob}
+                    image=''
                 />
 
 
                 <JobColumn
                     title='Completed'
-                    jobs={jobs.filter(job => job.status === 'Completed')}
+                    jobs={filteredJobs.filter(job => job.status === 'Completed')}
                     onMoveJob={handleMoveJob}
                 />
 
