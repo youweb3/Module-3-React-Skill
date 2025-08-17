@@ -9,6 +9,14 @@ const JobManagement = () => {
     { id: 3, title: "Generate Report", status: "Completed" },
   ]);
 
+  const [editJob, setEditJob] = useState(null);//null means no job is being edited
+  // Update the job title
+  const handleEdit = (id, newTitle) => {// newTitle is the updated title in input field
+    setJobs(jobs.map(job => job.id === id ? { ...job, title: newTitle } : job));
+    setEditJob(null);
+  }
+
+  // Add a new job
   const addJob = (title) => {
     if (title.trim() === "")
       // { console.log('empty');
@@ -23,10 +31,12 @@ const JobManagement = () => {
     setJobs([...jobs, newJob]);
   };
 
+  // Delete a job
   const deleteJob = (id) => {
     setJobs(jobs.filter((job) => job.id !== id));
   };
 
+  //update job status
   const updateJobStatus = (id, newStatus) => {
     // console.log('JOB ID', id, 'is:', newStatus);
     setJobs(
@@ -35,17 +45,20 @@ const JobManagement = () => {
   };
 
   return (
-    <div style={{ border: "solid 2px blue", margin: "10px" }}>
+    <div style={{ border: "solid 2px blue", margin: "10px",}}>
       <h1>Module 5/4</h1>
-      <div>
 
-        <JobForm addJob={addJob}/>
+      <JobForm addJob={addJob} />
 
+      <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}>
         <JobColumn
           title="Need to Start"
           deleteJob={deleteJob}
           updateJobStatus={updateJobStatus}
-           jobs={jobs.filter(job => job.status === "Need to Start")}
+          jobs={jobs.filter(job => job.status === "Need to Start")}
+          editJob={editJob}
+          setEditJob={setEditJob}
+          handleEdit={handleEdit}
         />
 
         <JobColumn
@@ -53,6 +66,9 @@ const JobManagement = () => {
           deleteJob={deleteJob}
           updateJobStatus={updateJobStatus}
           jobs={jobs.filter(job => job.status === "In Progress")}
+          editJob={editJob}
+          setEditJob={setEditJob}
+          handleEdit={handleEdit}
         />
 
         <JobColumn
@@ -60,6 +76,9 @@ const JobManagement = () => {
           deleteJob={deleteJob}
           updateJobStatus={updateJobStatus}
           jobs={jobs.filter(job => job.status === "Completed")}
+          editJob={editJob}
+          setEditJob={setEditJob}
+          handleEdit={handleEdit}
         />
       </div>
     </div>
