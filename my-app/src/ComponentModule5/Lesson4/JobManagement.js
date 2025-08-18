@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JobColumn from "./JobColumn";
 import JobForm from "./JobForm";
 import Search from "./Search";
 
 const JobManagement = () => {
-  const [jobs, setJobs] = useState([
-    { id: 1, title: "Parse Emails", status: "Need to Start" },
-    { id: 2, title: "SAP Extraction", status: "In Progress" },
-    { id: 3, title: "Generate Report", status: "Completed" },
-  ]);
+  // const [jobs, setJobs] = useState([
+  //   { id: 1, title: "Parse Emails", status: "Need to Start" },
+  //   { id: 2, title: "SAP Extraction", status: "In Progress" },
+  //   { id: 3, title: "Generate Report", status: "Completed" },
+  // ]);
+  const [jobs, setJobs] = useState(() => { // we use lazy initialization to load jobs from localStorage just read it once when the component mounts
+    const savedJobs = localStorage.getItem("jobs");
+    return savedJobs ? JSON.parse(savedJobs) : [
+      { id: 1, title: "Parse Emails", status: "Need to Start" },
+      { id: 2, title: "SAP Extraction", status: "In Progress" },
+      { id: 3, title: "Generate Report", status: "Completed" },
+    ];
+  });
+  
+  useEffect(() => {
+      localStorage.setItem("jobs", JSON.stringify(jobs));
+    }, [jobs]);// Whenever jobs change, update localStorage with the new jobs array
 
   const [searchItem, setSearchItem] = useState('');// state for search input, just for hold anything type in input
 
@@ -102,3 +114,22 @@ const JobManagement = () => {
 };
 
 export default JobManagement;
+
+
+//Lazy Initialization means that instead of giving a state its initial value directly, you provide a function that returns the initial value. This function is called only once, on the first render.
+
+//Simple example:
+
+// Without lazy
+//const [count, setCount] = useState(expensiveComputation());
+
+// With lazy
+//const [count, setCount] = useState(() => expensiveComputation());
+
+
+//The difference is:
+//In the first case, expensiveComputation() runs every render, even if it’s not needed.
+//With lazy initialization, the function runs only once when the state is first created.
+//In our localStorage example:
+//We don’t want to read localStorage.getItem("jobs") on every render.
+//We just want to read it once, when the state is initialized.
