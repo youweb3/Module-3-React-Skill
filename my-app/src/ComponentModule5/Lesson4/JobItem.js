@@ -32,7 +32,11 @@ const selectStyle = {
 const JobItem = ({ job, deleteJob, updateJobStatus, editJob, setEditJob, handleEdit }) => {
 
     return (
-        <li style={jobItemStyle}>
+        <li style={jobItemStyle}
+            draggable
+            onDragStart ={(e) => e.dataTransfer.setData('jobId', job.id)}
+            >
+
             {editJob === job.id ? (
 
                 <JobEdit
