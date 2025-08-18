@@ -1,6 +1,7 @@
 import { useState } from "react";
 import JobColumn from "./JobColumn";
 import JobForm from "./JobForm";
+import Search from "./Search";
 
 const JobManagement = () => {
   const [jobs, setJobs] = useState([
@@ -9,7 +10,10 @@ const JobManagement = () => {
     { id: 3, title: "Generate Report", status: "Completed" },
   ]);
 
-  const [editJob, setEditJob] = useState(null);//null means no job is being edited
+  const [searchItem, setSearchItem] = useState('');// state for search input, just for hold anything type in input
+
+  // state for edit job, null means no job is being edited
+  const [editJob, setEditJob] = useState(null);
   // Update the job title
   const handleEdit = (id, newTitle) => {// newTitle is the updated title in input field
     setJobs(jobs.map(job => job.id === id ? { ...job, title: newTitle } : job));
@@ -45,17 +49,23 @@ const JobManagement = () => {
   };
 
   return (
-    <div style={{ border: "solid 2px blue", margin: "10px",}}>
+    <div style={{ border: "solid 2px blue", margin: "10px", }}>
       <h1>Module 5/4</h1>
 
       <JobForm addJob={addJob} />
 
-      <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
+
+        <Search searchItem={searchItem} setSearchItem={setSearchItem} />
+
         <JobColumn
           title="Need to Start"
           deleteJob={deleteJob}
           updateJobStatus={updateJobStatus}
-          jobs={jobs.filter(job => job.status === "Need to Start")}
+          jobs={jobs
+            .filter(job => job.status === "Need to Start")
+            .filter(job => job.title.toLowerCase().includes(searchItem.toLowerCase()))
+          }
           editJob={editJob}
           setEditJob={setEditJob}
           handleEdit={handleEdit}
@@ -65,7 +75,10 @@ const JobManagement = () => {
           title="In Progress"
           deleteJob={deleteJob}
           updateJobStatus={updateJobStatus}
-          jobs={jobs.filter(job => job.status === "In Progress")}
+          jobs={jobs
+            .filter(job => job.status === "In Progress")// filter jobs by status
+            .filter(job => job.title.toLowerCase().includes(searchItem.toLowerCase()))// filter jobs by search input
+          }
           editJob={editJob}
           setEditJob={setEditJob}
           handleEdit={handleEdit}
@@ -75,7 +88,10 @@ const JobManagement = () => {
           title="Completed"
           deleteJob={deleteJob}
           updateJobStatus={updateJobStatus}
-          jobs={jobs.filter(job => job.status === "Completed")}
+          jobs={jobs
+            .filter(job => job.status === "Completed")
+            .filter(job => job.title.toLowerCase().includes(searchItem.toLowerCase()))
+          }
           editJob={editJob}
           setEditJob={setEditJob}
           handleEdit={handleEdit}
