@@ -2,32 +2,73 @@ import React, { useState } from "react";
 
 const JobForm = ({ addJob }) => {
 
-    const [addNewJob, setAddNewJob] = useState("");// state for input field, just for hold anything type in input. function called when user click the add button
+    const [addNewJob, setAddNewJob] = useState({// Initialize state to hold job details
+        title: "",
+        description: "",
+        priority: ""
+    });
+
+    const [error, setError] = useState(''); // State to hold error messages
 
     const handleAdded = (e) => {
         e.preventDefault(); // Prevent form submission
-        addJob(addNewJob);// Call the addJob function passed as a prop with the input value
+
+        // Validate that all fields are filled
+        if (!addNewJob.title || !addNewJob.description || !addNewJob.priority) {
+            setError("Please fill in all fields");
+            return; // Exit if any field is empty
+        }
+
+
+        addJob(addNewJob);// Pass the whole object//Call the addJob function passed as a prop with the new job details
         console.log('NEW job', addNewJob);
-        // Reset the input field after adding the job
-        setAddNewJob("");
+
+        setAddNewJob({ title: '', description: '', priority: '' });  // Reset the input field after adding the job
+        setError(''); // Clear any previous error messages
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setAddNewJob({
+            ...addNewJob, [name]: value,// update the jobDetails state with the new input value
+        });
     };
 
     return (
-        <form>
+        <form onSubmit={handleAdded}>
             <input
                 style={{ padding: "5px 10px", margin: "10px" }}
                 type="text"
-                placeholder="Add Your Job"
-                value={addNewJob}
-                onChange={(e) => setAddNewJob(e.target.value)}
+                name="title"
+                placeholder="Job Title"
+                value={addNewJob.title}
+                onChange={handleInputChange}
             />
-            <button
-                type="button"
-                onClick={handleAdded}
-                style={{ padding: "5px 10px" }}
-            >
+            <input
+                style={{ padding: "5px 10px", margin: "10px" }}
+                type="text"
+                name="description"
+                placeholder="Job Description"
+                value={addNewJob.description}
+                onChange={handleInputChange}
+            />
+            <select
+                name="priority"
+                value={addNewJob.priority}
+                onChange={handleInputChange}
+                style={{ padding: "5px 10px", margin: "5px" }}
+                >
+                <option value="">Select Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <button type="submit" style={{ padding: "5px 10px", marginLeft:'13px' }}>
                 Add Job
             </button>
+
+             {error && <p style={{ color: 'red', marginLeft:'15px' }}>{error}</p>} {/* Display error message if any */}
         </form>
     );
 };

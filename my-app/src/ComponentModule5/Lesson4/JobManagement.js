@@ -17,10 +17,10 @@ const JobManagement = () => {
       { id: 3, title: "Generate Report", status: "Completed" },
     ];
   });
-  
+  // useEffect to update localStorage whenever jobs change
   useEffect(() => {
-      localStorage.setItem("jobs", JSON.stringify(jobs));
-    }, [jobs]);// Whenever jobs change, update localStorage with the new jobs array
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+  }, [jobs]);// Whenever jobs change, update localStorage with the new jobs array
 
   const [searchItem, setSearchItem] = useState('');// state for search input, just for hold anything type in input
 
@@ -33,18 +33,11 @@ const JobManagement = () => {
   }
 
   // Add a new job
-  const addJob = (title) => {
-    if (title.trim() === "")
-      // { console.log('empty');
-      return;
-    const newJob = {
-      id: Date.now(),
-      title,
-      status: "Need to Start",
-    };
+  const addJob = (newJob) => {
+    const jobWithId = { ...newJob, id: Date.now(), 
+      status: "Need to Start" }; // Assign a unique ID and default status
     // console.log('new job', newJob);
-
-    setJobs([...jobs, newJob]);
+    setJobs([...jobs, jobWithId]); // Add the new job to the jobs array
   };
 
   // Delete a job
@@ -65,7 +58,6 @@ const JobManagement = () => {
       <h1>Module 5/4</h1>
 
       <JobForm addJob={addJob} />
-
       <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
 
         <Search searchItem={searchItem} setSearchItem={setSearchItem} />
