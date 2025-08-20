@@ -25,6 +25,7 @@ const buttonStyle = {
 
 const JobEdit = ({ job, handleEdit, cancelEdit }) => {
     const [tempTitle, setTempTitle] = useState(job.title);//for editing job title
+      const [tempDescription, setTempDescription] = useState(job.description);
     return (
         <div style={containerStyle}>
             <input
@@ -32,6 +33,14 @@ const JobEdit = ({ job, handleEdit, cancelEdit }) => {
                 value={tempTitle}
                 onChange={(e) => setTempTitle(e.target.value)}
                 style={inputStyle}
+                placeholder="Edit job title"
+            />
+            <input
+            type='text'
+            value={tempDescription}
+            onChange={(e) => setTempDescription(e.target.value)}
+            style={inputStyle}
+            placeholder="Edit job description"
             />
 
             <button onClick={() => handleEdit(job.id, tempTitle)} style={buttonStyle}>Save</button>

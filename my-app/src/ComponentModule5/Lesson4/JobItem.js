@@ -34,8 +34,8 @@ const JobItem = ({ job, deleteJob, updateJobStatus, editJob, setEditJob, handleE
     return (
         <li style={jobItemStyle}
             draggable
-            onDragStart ={(e) => e.dataTransfer.setData('jobId', job.id)}
-            >
+            onDragStart={(e) => e.dataTransfer.setData('jobId', job.id)}
+        >
 
             {editJob === job.id ? (
 
@@ -47,7 +47,7 @@ const JobItem = ({ job, deleteJob, updateJobStatus, editJob, setEditJob, handleE
 
             ) : (
                 <>
-                    {job.id} - {job.title} - ({job.status})
+                    {job.id}:<strong>{job.title}</strong>- {job.description} ({job.status})
 
                     < select
                         value={job.status}

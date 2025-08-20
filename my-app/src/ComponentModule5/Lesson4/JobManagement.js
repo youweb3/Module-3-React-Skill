@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import JobColumn from "./JobColumn";
 import JobForm from "./JobForm";
 import Search from "./Search";
+import JobList from "./JobList";
 
 const JobManagement = () => {
   // const [jobs, setJobs] = useState([
@@ -27,8 +28,8 @@ const JobManagement = () => {
   // state for edit job, null means no job is being edited
   const [editJob, setEditJob] = useState(null);
   // Update the job title
-  const handleEdit = (id, newTitle) => {// newTitle is the updated title in input field
-    setJobs(jobs.map(job => job.id === id ? { ...job, title: newTitle } : job));
+  const handleEdit = (id, newTitle, newDescription) => {// newTitle is the updated title in input field
+    setJobs(jobs.map(job => job.id === id ? { ...job, title: newTitle, description: newDescription } : job));
     setEditJob(null);
   }
 
@@ -61,6 +62,8 @@ const JobManagement = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
 
         <Search searchItem={searchItem} setSearchItem={setSearchItem} />
+        
+        <JobList jobs={jobs}/>
 
         <JobColumn
           title="Need to Start"

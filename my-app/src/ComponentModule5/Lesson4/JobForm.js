@@ -10,6 +10,9 @@ const JobForm = ({ addJob }) => {
 
     const [error, setError] = useState(''); // State to hold error messages
 
+    const [successMessage, setSuccessMessage] = useState(''); // State to hold success messages
+
+    // Function to handle form submission
     const handleAdded = (e) => {
         e.preventDefault(); // Prevent form submission
 
@@ -22,6 +25,8 @@ const JobForm = ({ addJob }) => {
 
         addJob(addNewJob);// Pass the whole object//Call the addJob function passed as a prop with the new job details
         console.log('NEW job', addNewJob);
+        setSuccessMessage("Job added successfully!"); // Set success message
+        setTimeout(() => setSuccessMessage(''), 3000); // Clear success message after 3 seconds
 
         setAddNewJob({ title: '', description: '', priority: '' });  // Reset the input field after adding the job
         setError(''); // Clear any previous error messages
@@ -69,6 +74,7 @@ const JobForm = ({ addJob }) => {
             </button>
 
              {error && <p style={{ color: 'red', marginLeft:'15px' }}>{error}</p>} {/* Display error message if any */}
+            {successMessage && <p style={{ color: 'green', marginLeft:'15px' }}>{successMessage}</p>} {/* Display success message if any */}
         </form>
     );
 };
