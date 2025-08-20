@@ -23,6 +23,17 @@ const JobForm = ({ addJob }) => {
         }
 
 
+        if (addNewJob.title.length < 6) {
+        setError("Title must be at least 6 characters long");
+        return;
+    }
+        // Validate that the title is at least 3 characters long
+        if(addNewJob.description.length < 6) {
+            setError("Description must be at least 6 characters long");
+            return; // Exit if description is too short
+        }
+
+
         addJob(addNewJob);// Pass the whole object//Call the addJob function passed as a prop with the new job details
         console.log('NEW job', addNewJob);
         setSuccessMessage("Job added successfully!"); // Set success message
