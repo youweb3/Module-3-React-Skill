@@ -1,0 +1,182 @@
+
+.app {
+  max-width: 1200px;
+   margin: 0 auto;
+  padding: 0 12px;
+}
+
+ul { margin: 0; padding: 0; }
+
+/* ////////////////////////////////////////// */
+
+.job-management-container{
+    display: flex;
+    justify-content: 'space-between';
+    flex-direction: column;
+}
+
+/* .job-column */
+.job-columnn {
+    border: 2px solid green;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    flex: 1;
+    min-width: 250px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* JobItem */
+.job-item {
+    list-style-type: none;
+    margin-bottom: 8px;
+    padding: 5px;
+    border-bottom: 1px solid #a8b3dfff;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+.job-button {
+    margin: 0 3px;
+    font-size: 14px;
+    background-color: #7e789dff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 3px 6px;
+    display: flex;
+    align-items: center;
+}
+
+.job-select {
+    margin: 0 5px;
+    padding: 3px;
+    border-radius: 4px;
+}
+
+.job-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.job-actions button,
+.job-actions select {
+    font-size: 14px;
+    background-color: #7e789d;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.job-actions select {
+    background-color: #cacdf6;
+    color: #0c0000;
+    border: 1px solid #110e0e;
+}
+/* //////////////////////////////// */
+
+/* JobEdit */
+.job-edit-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.job-edit-input {
+    margin-right: 5px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    flex: 1;
+}
+
+.job-edit-button {
+    margin: 0 3px;
+    font-size: 14px;
+    background-color: #7e789dff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+/* /////////////////////////////////////// */
+
+/* JobForm */
+.job-form-input, .job-form-select, .job-form-button {
+    padding: 5px 10px;
+    margin: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.job-form-select {
+    margin: 5px;
+}
+
+.job-form-error {
+    color: red;
+    margin-left: 15px;
+}
+
+.job-form-success {
+    color: green;
+    margin-left: 15px;
+}
+
+/* ///////////////////////////////////// */
+
+/* Search */
+.job-search {
+    margin: 10px;
+    padding: 5px;
+}
+/* /////////////////////////// */
+
+/* jobList */
+.job-lists li{
+    margin: 3px;
+    padding-left: 10px;
+    list-style: none;
+}
+
+.job-lists ul {
+    margin-top: 2px;
+}
+
+.job-lists h2 {
+  margin: 0 0 2px 15px;
+  font-size: 18px;
+}
+
+
+@media (max-width: 480px) {
+  .job-columnn {
+    padding: 0;
+    margin: 13px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+    
+.job-lists ul {
+    margin-top: 2px;
+    padding: 12px;
+}
+
+}
+
+@media (max-width: 768px) {
+    .job-management-container {
+        flex-direction: column;
+    }
+}

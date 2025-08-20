@@ -1,38 +1,11 @@
 import React from "react";
 import JobEdit from "./JobEdit";
-
-const jobItemStyle = {
-    listStyleType: "none",
-    marginBottom: "8px",
-    padding: "5px",
-    borderBottom: "1px solid #a8b3dfff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-};
-
-const buttonStyle = {
-    margin: "0 3px",
-    fontSize: "14px",
-    backgroundColor: "#7e789dff",
-    color: "white",
-    borderRadius: "5px",
-    cursor: "pointer",
-    padding: "3px 6px",
-    display: "flex",
-    alignItems: "center",
-};
-
-const selectStyle = {
-    margin: "0 5px",
-    padding: "3px",
-    borderRadius: "4px",
-};
+import './JobStyles.css';
 
 const JobItem = ({ job, deleteJob, updateJobStatus, editJob, setEditJob, handleEdit }) => {
 
     return (
-        <li style={jobItemStyle}
+        <li className="job-item"
             draggable
             onDragStart={(e) => e.dataTransfer.setData('jobId', job.id)}
         >
@@ -49,26 +22,28 @@ const JobItem = ({ job, deleteJob, updateJobStatus, editJob, setEditJob, handleE
                 <>
                     {job.id}:<strong>{job.title}</strong>- {job.description} ({job.status})
 
-                    < select
-                        value={job.status}
-                        onChange={(e) => updateJobStatus(job.id, e.target.value)}
-                        style={selectStyle}
-                    >
-                        <option value="Need to Start">Need to Start</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
-                    </select>
+                    <div className="job-actions">
+                        < select
+                            className="job-select"
+                            value={job.status}
+                            onChange={(e) => updateJobStatus(job.id, e.target.value)}
+                        >
+                            <option value="Need to Start">Need to Start</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
 
-                    <button onClick={() => deleteJob(job.id)} style={buttonStyle}>
+                        <button className="job-button" onClick={() => deleteJob(job.id)}>
 
-                        <img
-                            src="https://openclipart.org/image/800px/325437"
-                            alt="delete"
-                            style={{ width: "15px", height: "15px", marginRight: "3px" }}
-                        />
-                        DeleteJob
-                    </button>
-                    <button onClick={() => setEditJob(job.id)} style={buttonStyle}>Edit</button>
+                            <img
+                                src="https://openclipart.org/image/800px/325437"
+                                alt="delete"
+                                style={{ width: "15px", height: "15px", marginRight: "3px" }}
+                            />
+                            DeleteJob
+                        </button>
+                        <button className="job-button" onClick={() => setEditJob(job.id)}>Edit</button>
+                    </div>
                 </>
             )}
         </li>

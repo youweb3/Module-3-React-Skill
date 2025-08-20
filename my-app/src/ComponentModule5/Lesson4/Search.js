@@ -1,4 +1,5 @@
 import React from 'react'
+import './JobStyles.css';
 
 const Search = ({ searchItem, setSearchItem }) => {
     return (
@@ -7,7 +8,7 @@ const Search = ({ searchItem, setSearchItem }) => {
             placeholder='Search Job...'
             value={searchItem}
             onChange={(e) => setSearchItem(e.target.value)}
-            style={{ margin: "10px", padding: "5px", width: "200px" }}
+            className='job-search'
         />
 
     );

@@ -1,18 +1,10 @@
 import React from 'react'
 import JobItem from './JobItem'
+import './JobStyles.css';
 
-const columnStyle = {
-    border: "solid 2px green",
-    margin: "10px",
-    padding: "10px",
-    display: "inline-block",
-    backgroundColor: "#f0f0f0",
-    // textAlign: "center",
-}
-
-const JobColumn = ({ jobs, updateJobStatus, deleteJob, editJob, setEditJob, handleEdit,title }) => {
+const JobColumn = ({ jobs, updateJobStatus, deleteJob, editJob, setEditJob, handleEdit, title }) => {
     return (
-        <div style={columnStyle}
+        <div className='job-columnn'
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
                 const jobId = Number(e.dataTransfer.getData('jobId'));

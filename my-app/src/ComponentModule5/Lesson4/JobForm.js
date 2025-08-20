@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./JobStyles.css";
 
 const JobForm = ({ addJob }) => {
 
@@ -24,11 +25,11 @@ const JobForm = ({ addJob }) => {
 
 
         if (addNewJob.title.length < 6) {
-        setError("Title must be at least 6 characters long");
-        return;
-    }
+            setError("Title must be at least 6 characters long");
+            return;
+        }
         // Validate that the title is at least 3 characters long
-        if(addNewJob.description.length < 6) {
+        if (addNewJob.description.length < 6) {
             setError("Description must be at least 6 characters long");
             return; // Exit if description is too short
         }
@@ -53,15 +54,15 @@ const JobForm = ({ addJob }) => {
     return (
         <form onSubmit={handleAdded}>
             <input
-                style={{ padding: "5px 10px", margin: "10px" }}
                 type="text"
                 name="title"
                 placeholder="Job Title"
                 value={addNewJob.title}
                 onChange={handleInputChange}
+                className="job-form-input"
             />
             <input
-                style={{ padding: "5px 10px", margin: "10px" }}
+                className="job-form-input"
                 type="text"
                 name="description"
                 placeholder="Job Description"
@@ -72,20 +73,18 @@ const JobForm = ({ addJob }) => {
                 name="priority"
                 value={addNewJob.priority}
                 onChange={handleInputChange}
-                style={{ padding: "5px 10px", margin: "5px" }}
-                >
+                className="job-form-select"
+            >
                 <option value="">Select Priority</option>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
             </select>
 
-            <button type="submit" style={{ padding: "5px 10px", marginLeft:'13px' }}>
-                Add Job
-            </button>
+            <button type="submit" className="job-form-button">Add Job</button>
 
-             {error && <p style={{ color: 'red', marginLeft:'15px' }}>{error}</p>} {/* Display error message if any */}
-            {successMessage && <p style={{ color: 'green', marginLeft:'15px' }}>{successMessage}</p>} {/* Display success message if any */}
+            {error && <p className="job-form-error">{error}</p>} {/* Display error message if any */}
+            {successMessage && <p className="job-form-success">{successMessage}</p>} {/* Display success message if any */}
         </form>
     );
 };

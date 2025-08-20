@@ -1,53 +1,31 @@
 import React, { useState } from 'react';
-
-const containerStyle = {
-  display: "flex",
-  alignItems: "center",
-};
-
-const inputStyle = {
-  marginRight: "5px",
-  padding: "4px 6px",
-  borderRadius: "4px",
-  border: "1px solid #ccc",
-  flex: "1",
-};
-
-const buttonStyle = {
-  margin: "0 3px",
-  fontSize: "14px",
-  backgroundColor: "#7e789dff",
-  color: "white",
-  borderRadius: "5px",
-  cursor: "pointer",
-  padding: "4px 8px",
-};
+import './JobStyles.css';
 
 const JobEdit = ({ job, handleEdit, cancelEdit }) => {
-    const [tempTitle, setTempTitle] = useState(job.title);//for editing job title
-      const [tempDescription, setTempDescription] = useState(job.description);
-    return (
-        <div style={containerStyle}>
-            <input
-                type='text'
-                value={tempTitle}
-                onChange={(e) => setTempTitle(e.target.value)}
-                style={inputStyle}
-                placeholder="Edit job title"
-            />
-            <input
-            type='text'
-            value={tempDescription}
-            onChange={(e) => setTempDescription(e.target.value)}
-            style={inputStyle}
-            placeholder="Edit job description"
-            />
+  const [tempTitle, setTempTitle] = useState(job.title);//for editing job title
+  const [tempDescription, setTempDescription] = useState(job.description);
+  return (
+    <div className="job-edit-container">
+      <input
+        type='text'
+        value={tempTitle}
+        onChange={(e) => setTempTitle(e.target.value)}
+        placeholder="Edit job title"
+        className='job-edit-input'
+      />
+      <input
+        type='text'
+        value={tempDescription}
+        onChange={(e) => setTempDescription(e.target.value)}
+        placeholder="Edit job description"
+        className='job-edit-input'
+      />
 
-            <button onClick={() => handleEdit(job.id, tempTitle)} style={buttonStyle}>Save</button>
-            <button onClick={cancelEdit} style={buttonStyle}>Cancel</button>
+      <button onClick={() => handleEdit(job.id, tempTitle)} className='job-edit-button'>Save</button>
+      <button onClick={cancelEdit} className='job-edit-button'>Cancel</button>
 
-        </div>
-    )
+    </div>
+  )
 }
 
 export default JobEdit;

@@ -3,6 +3,7 @@ import JobColumn from "./JobColumn";
 import JobForm from "./JobForm";
 import Search from "./Search";
 import JobList from "./JobList";
+import "./JobStyles.css";
 
 const JobManagement = () => {
   // const [jobs, setJobs] = useState([
@@ -59,12 +60,12 @@ const JobManagement = () => {
       <h1>Module 5/4</h1>
 
       <JobForm addJob={addJob} />
-      <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
+      <div className="job-management-container">
 
         <Search searchItem={searchItem} setSearchItem={setSearchItem} />
         
         <JobList jobs={jobs}/>
-
+        <div></div>
         <JobColumn
           title="Need to Start"
           deleteJob={deleteJob}
