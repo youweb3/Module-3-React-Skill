@@ -1,32 +1,62 @@
-import React, { useState } from 'react';
-import './JobStyles.css';
+import React, { useState } from "react";
+import "./JobStyles.css";
 
 const JobEdit = ({ job, handleEdit, cancelEdit }) => {
-  const [tempTitle, setTempTitle] = useState(job.title);//for editing job title
-  const [tempDescription, setTempDescription] = useState(job.description);
+  const [tempTitle, setTempTitle] = useState(job.title); //for editing job title
+  const [tempDescription, setTempDescription] = useState(job.description); //for editing job description, default to empty string if no description
+
+  const [errors, setErrors] = useState(""); // State to hold error messages
+
+  const [successMessages, setSuccessMessages] = useState("");
+
+  const onSave = (e) => {
+    e.preventDefault(); // Prevent form submission
+    if (!tempTitle || !tempDescription) {
+      setErrors("Title and description cannot be empty.");
+      return;
+    }
+    if (tempTitle.length < 6 || tempDescription.length < 6) {
+      setErrors("Title and description must be at least 6 characters long.");
+      return;
+    }
+
+    handleEdit(job.id, tempTitle, tempDescription);
+    setErrors("");
+
+    setSuccessMessages("Job updated successfully!");
+    setTimeout(() => {
+    setSuccessMessages("");
+    cancelEdit(); // <-- Only call this after showing the message!
+    }, 2000);
+  };
+
   return (
-    <div className="job-edit-container">
+    <form onSubmit={onSave} className="job-edit-container">
       <input
-        type='text'
+        type="text"
         value={tempTitle}
         onChange={(e) => setTempTitle(e.target.value)}
         placeholder="Edit job title"
-        className='job-edit-input'
+        className="job-edit-input"
       />
       <input
-        type='text'
+        type="text"
         value={tempDescription}
         onChange={(e) => setTempDescription(e.target.value)}
         placeholder="Edit job description"
-        className='job-edit-input'
+        className="job-edit-input"
       />
+      <button type="submit" className="job-edit-button">Save</button>
+      <button type="button" onClick={() => cancelEdit()} className="job-edit-button">Cancel</button>
 
-      <button onClick={() => handleEdit(job.id, tempTitle)} className='job-edit-button'>Save</button>
-      <button onClick={cancelEdit} className='job-edit-button'>Cancel</button>
+      {errors && <p className="job-edit-error">{errors}</p>}
+      {console.log("RENDER JSX SUCCESS:", successMessages)}
+      {successMessages && (<p className="job-edit-success">{successMessages}</p>)}
 
-    </div>
-  )
-}
+
+    </form>
+  );
+};
 
 export default JobEdit;
 

@@ -26,18 +26,22 @@ const JobManagement = () => {
 
   const [searchItem, setSearchItem] = useState('');// state for search input, just for hold anything type in input
 
-  // state for edit job, null means no job is being edited
-  const [editJob, setEditJob] = useState(null);
+
+  const [editJob, setEditJob] = useState(null);// state for edit job, null means no job is being edited
   // Update the job title
   const handleEdit = (id, newTitle, newDescription) => {// newTitle is the updated title in input field
-    setJobs(jobs.map(job => job.id === id ? { ...job, title: newTitle, description: newDescription } : job));
-    setEditJob(null);
-  }
+    setJobs(prevJobs =>
+      prevJobs.map(job =>
+        job.id === id ? { ...job, title: newTitle, description: newDescription } : job));
+    // setEditJob(null);// <-- THIS hides the edit form immediately! comment this line to keep the edit form open after saving and show success message
+  };
 
   // Add a new job
   const addJob = (newJob) => {
-    const jobWithId = { ...newJob, id: Date.now(), 
-      status: "Need to Start" }; // Assign a unique ID and default status
+    const jobWithId = {
+      ...newJob, id: Date.now(),
+      status: "Need to Start"
+    }; // Assign a unique ID and default status
     // console.log('new job', newJob);
     setJobs([...jobs, jobWithId]); // Add the new job to the jobs array
   };
@@ -63,9 +67,9 @@ const JobManagement = () => {
       <div className="job-management-container">
 
         <Search searchItem={searchItem} setSearchItem={setSearchItem} />
-        
-        <JobList jobs={jobs}/>
-        <div></div>
+
+        <JobList jobs={jobs} />
+
         <JobColumn
           title="Need to Start"
           deleteJob={deleteJob}
