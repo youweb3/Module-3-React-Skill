@@ -26,17 +26,26 @@ const JobManagementCategory = () => {
 
   return (
     <div style={{ border: "solid 2px green", margin: "10px", padding: "10px" }}>
+      <h1>Module 6 / Lesson 1</h1>
       <h2>Job Management - Categories</h2>
-      {availableCategories.map((cat) => (
+
+      {availableCategories.map((cat) => {
+        const isSelected = jobDetails.categories.includes(cat);
+        const buttonStyle = isSelected
+          ? { backgroundColor: "green", color: "white", margin: "3px" }
+          : { color: "black", margin: "1px" };
+
+        return (
           <button
             key={cat}
             type="button"
             onClick={() => handleCategoryToggle(cat)}
-            style={{margin:'10px'}}
+            style={buttonStyle}
           >
             {cat}
           </button>
-      ))}
+        );
+      })}
 
       <div>
         <h3>Selected category:</h3>
