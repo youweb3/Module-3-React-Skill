@@ -39,3 +39,8 @@
   font-size: 14px;
   font-size: bold;
 }
+
+.search-item{
+  display: flex;
+  margin: 5px;
+}

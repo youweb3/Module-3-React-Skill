@@ -11,18 +11,19 @@ const JobManagementCategory = () => {
   });
 
   const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const availableCategories = ["IT", "Design", "Marketing", "Finance"]; //
 
   const handleCategoryToggle = (category) => {
     const isSelected = jobDetails.categories.includes(category); //check if category available or not, true or false
-    
+
     if (isSelected) {
       const newCategories = jobDetails.categories.filter((c) => c !== category);
       setJobDetails({ ...jobDetails, categories: newCategories });
     } else {
 
-      if (jobDetails.categories.length >=3) {
+      if (jobDetails.categories.length >= 3) {
         alert('You can only select up to 3 categories');
         return;
       }
@@ -37,7 +38,7 @@ const JobManagementCategory = () => {
     e.preventDefault();
 
     if (jobDetails.categories.length === 0) {
-      setError('Please select at least on category before sybmitting')
+      setError('Please select at least onE category before submitting')
       return;//
     }
     setError('');
@@ -53,19 +54,27 @@ const JobManagementCategory = () => {
       <h1>Module 6 / Lesson 1</h1>
       <h2>Job Management - Categories</h2>
 
-      {availableCategories.map((cat) => {
-        const isSelected = jobDetails.categories.includes(cat);
-        return (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => handleCategoryToggle(cat)}
-            className={`category-btn ${isSelected ? 'selected' : ''}`}
-          >
-            {cat}
-          </button>
-        );
-      })}
+      <input className="search-item"
+        type="text"
+        placeholder="Search Category..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)} />
+
+      {availableCategories
+        .filter(cat => cat.toLowerCase().includes(searchTerm.toLowerCase()))
+        .map((cat) => {
+          const isSelected = jobDetails.categories.includes(cat);
+          return (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => handleCategoryToggle(cat)}
+              className={`category-btn ${isSelected ? 'selected' : ''}`}
+            >
+              {cat}
+            </button>
+          );
+        })}
 
       <div>
         <h3>Selected category:</h3>
