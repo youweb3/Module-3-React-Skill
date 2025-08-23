@@ -49,6 +49,10 @@ const JobManagementCategory = () => {
     setJobDetails({ ...jobDetails, categories: [] });
   };
 
+  const filteredCategories = availableCategories.filter(cat =>
+    cat.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container">
       <h1>Module 6 / Lesson 1</h1>
@@ -60,10 +64,11 @@ const JobManagementCategory = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)} />
 
-      {availableCategories
-        .filter(cat => cat.toLowerCase().includes(searchTerm.toLowerCase()))
-        .map((cat) => {
-          const isSelected = jobDetails.categories.includes(cat);
+        {filteredCategories.length === 0
+         ? (<p>No results found</p>)
+         : (filteredCategories.map((cat) => {
+           const isSelected = jobDetails.categories.includes(cat);
+
           return (
             <button
               key={cat}
@@ -74,7 +79,8 @@ const JobManagementCategory = () => {
               {cat}
             </button>
           );
-        })}
+        })
+      )}
 
       <div>
         <h3>Selected category:</h3>
