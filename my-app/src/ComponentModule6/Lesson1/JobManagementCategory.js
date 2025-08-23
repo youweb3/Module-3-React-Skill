@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './JobManagementCategory.css'
 
 const JobManagementCategory = () => {
   const [jobDetails, setJobDetails] = useState({
@@ -38,26 +39,22 @@ const JobManagementCategory = () => {
   }
 
   const handleClearCategories = (cate) => {
-    setJobDetails({ ...jobDetails, categories: [] })
-  }
+    setJobDetails({ ...jobDetails, categories: [] });
+  };
 
   return (
-    <div style={{ border: "solid 2px green", margin: "10px", padding: "10px" }}>
+    <div className="container">
       <h1>Module 6 / Lesson 1</h1>
       <h2>Job Management - Categories</h2>
 
       {availableCategories.map((cat) => {
         const isSelected = jobDetails.categories.includes(cat);
-        const buttonStyle = isSelected
-          ? { backgroundColor: "green", color: "white", margin: "3px" }
-          : { color: "black", margin: "3px" };
-
         return (
           <button
             key={cat}
             type="button"
             onClick={() => handleCategoryToggle(cat)}
-            style={buttonStyle}
+            className={`category-btn ${isSelected ? 'selected' : ''}`}
           >
             {cat}
           </button>
@@ -68,7 +65,7 @@ const JobManagementCategory = () => {
         <h3>Selected category:</h3>
         {jobDetails.categories.length > 0 ? (
           jobDetails.categories.map((cat) => (
-            <span key={cat} style={{ marginRight: "10px" }}>
+            <span key={cat} className="selected-category">
               {cat}
             </span>
           ))
@@ -79,7 +76,7 @@ const JobManagementCategory = () => {
 
       <form onSubmit={handleSubmit}>
         <button type="submit">submit</button>
-        {error && <p>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
       </form>
 
       <button type="button" onClick={() => handleClearCategories()}>Clear Categories</button>

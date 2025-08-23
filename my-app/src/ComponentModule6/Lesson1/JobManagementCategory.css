@@ -1,0 +1,41 @@
+.container {
+  border: 2px solid green;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.category-btn {
+  margin: 5px;
+  padding: 8px 12px;
+  border: 2px solid rgb(5, 6, 89);
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.category-btn.selected {
+  background-color: green;
+  color: white;
+  border-color: yellow;
+}
+
+.category-btn:hover {
+  background-color: #e6a1a1;
+}
+
+
+.selected-category {
+  display: inline-block;
+  background-color: #eee;
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.error-text {
+  color: red;
+  font-size: 14px;
+  font-size: bold;
+}
