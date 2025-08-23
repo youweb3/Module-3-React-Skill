@@ -12,6 +12,7 @@ const JobManagementCategory = () => {
   const [error, setError] = useState('');
 
   const availableCategories = ["IT", "Design", "Marketing", "Finance"]; //
+
   const handleCategoryToggle = (category) => {
     const isSelected = jobDetails.categories.includes(category); //check if category available or not, true or false
     if (isSelected) {
@@ -25,7 +26,7 @@ const JobManagementCategory = () => {
     }
   };
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (jobDetails.categories.length === 0) {
@@ -34,6 +35,10 @@ const JobManagementCategory = () => {
     }
     setError('');
     console.log('Submitted Job Details:', jobDetails)
+  }
+
+  const handleClearCategories = (cate) => {
+    setJobDetails({ ...jobDetails, categories: [] })
   }
 
   return (
@@ -72,10 +77,12 @@ const JobManagementCategory = () => {
         )}
       </div>
 
-          <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <button type="submit">submit</button>
         {error && <p>{error}</p>}
       </form>
+
+      <button type="button" onClick={() => handleClearCategories()}>Clear Categories</button>
     </div>
   );
 };
