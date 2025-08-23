@@ -16,10 +16,16 @@ const JobManagementCategory = () => {
 
   const handleCategoryToggle = (category) => {
     const isSelected = jobDetails.categories.includes(category); //check if category available or not, true or false
+    
     if (isSelected) {
       const newCategories = jobDetails.categories.filter((c) => c !== category);
       setJobDetails({ ...jobDetails, categories: newCategories });
     } else {
+
+      if (jobDetails.categories.length >=3) {
+        alert('You can only select up to 3 categories');
+        return;
+      }
       setJobDetails({
         ...jobDetails,
         categories: [...jobDetails.categories, category],
