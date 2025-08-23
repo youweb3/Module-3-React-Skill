@@ -9,8 +9,9 @@ const JobManagementCategory = () => {
     salary: "",
   });
 
-  const availableCategories = ["IT", "Design", "Marketing", "Finance"]; //
+  const [error, setError] = useState('');
 
+  const availableCategories = ["IT", "Design", "Marketing", "Finance"]; //
   const handleCategoryToggle = (category) => {
     const isSelected = jobDetails.categories.includes(category); //check if category available or not, true or false
     if (isSelected) {
@@ -24,6 +25,17 @@ const JobManagementCategory = () => {
     }
   };
 
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+
+    if (jobDetails.categories.length === 0) {
+      setError('Please select at least on category before sybmitting')
+      return;//
+    }
+    setError('');
+    console.log('Submitted Job Details:', jobDetails)
+  }
+
   return (
     <div style={{ border: "solid 2px green", margin: "10px", padding: "10px" }}>
       <h1>Module 6 / Lesson 1</h1>
@@ -33,7 +45,7 @@ const JobManagementCategory = () => {
         const isSelected = jobDetails.categories.includes(cat);
         const buttonStyle = isSelected
           ? { backgroundColor: "green", color: "white", margin: "3px" }
-          : { color: "black", margin: "1px" };
+          : { color: "black", margin: "3px" };
 
         return (
           <button
@@ -59,6 +71,11 @@ const JobManagementCategory = () => {
           <p>NO categories Selected</p>
         )}
       </div>
+
+          <form onSubmit={handleSubmit}>
+        <button type="submit">submit</button>
+        {error && <p>{error}</p>}
+      </form>
     </div>
   );
 };
