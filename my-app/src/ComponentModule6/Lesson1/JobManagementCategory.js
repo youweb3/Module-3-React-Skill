@@ -2,6 +2,9 @@
 import useCategorySelection from "./useCategorySelection";
 import './JobManagementCategory.css'
 import JobForm from "./JobForm";
+import SearchForm from "./SearchForm";
+import JobCategory from "./JobCategory";
+import SelectedCategories from './SelectedCategories';
 
 const JobManagementCategory = () => {
   const {
@@ -27,47 +30,23 @@ const JobManagementCategory = () => {
   };
 
   return (
+
     <div className="container">
       <h1>Module 6 / Lesson 1</h1>
       <h2>Job Management - Categories</h2>
 
-      {/* Search Box */}
-      <input className="search-item"
-        type="text"
-        placeholder="Search Category..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} />
+      <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-        {/* category List */}
-        {filteredCategories.length === 0
-         ? (<p>No results found</p>)
-         : (filteredCategories.map((cat) => (
+      <JobCategory
+        categories={categories}
+        filteredCategories={filteredCategories}
+        handleCategoryToggle={handleCategoryToggle}
+      />
 
-            <button
-              key={cat}
-              type="button"
-              onClick={() => handleCategoryToggle(cat)}
-              className={`category-btn ${categories.includes(cat) ? 'selected' : ''}`}
-            >
-              {cat}
-            </button>
-          ))
-      )}
+      <h3>Selected category:</h3>
+      <SelectedCategories categories={categories} />
 
-      <div>
-        <h3>Selected category:</h3>
-        {categories.length > 0 ? (
-          categories.map((cat) => (
-            <span key={cat} className="selected-category">
-              {cat}
-            </span>
-          ))
-        ) : (
-          <p>NO categories Selected</p>
-        )}
-      </div>
-
-      <JobForm categories={categories} onSubmit={handleSubmit}/>
+      <JobForm categories={categories} onSubmit={handleSubmit} />
 
       {error && <p className="error-text">{error}</p>}
 
