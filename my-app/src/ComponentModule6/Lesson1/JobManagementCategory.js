@@ -1,57 +1,38 @@
 import { useState } from "react";
+import useCategorySelection from "./useCategorySelection";
 import './JobManagementCategory.css'
 
 const JobManagementCategory = () => {
+  const {
+    categories,
+    error,
+    setError,
+    searchTerm,
+    setSearchTerm,
+    handleCategoryToggle,
+    handleClearCategories,
+    filteredCategories
+  } = useCategorySelection();
+
   const [jobDetails, setJobDetails] = useState({
     title: "",
     description: "",
-    categories: [],
     location: "",
     salary: "",
   });
 
-  const [error, setError] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const availableCategories = ["IT", "Design", "Marketing", "Finance"]; //
-
-  const handleCategoryToggle = (category) => {
-    const isSelected = jobDetails.categories.includes(category); //check if category available or not, true or false
-
-    if (isSelected) {
-      const newCategories = jobDetails.categories.filter((c) => c !== category);
-      setJobDetails({ ...jobDetails, categories: newCategories });
-    } else {
-
-      if (jobDetails.categories.length >= 3) {
-        alert('You can only select up to 3 categories');
-        return;
-      }
-      setJobDetails({
-        ...jobDetails,
-        categories: [...jobDetails.categories, category],
-      });
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (jobDetails.categories.length === 0) {
-      setError('Please select at least onE category before submitting')
+    if (categories.length === 0) {
+      setError('Please select at least on category before submitting')
       return;//
     }
     setError('');
-    console.log('Submitted Job Details:', jobDetails)
+
+    const SubmittedJob = {...jobDetails, categories };
+    console.log('Submitted Job Details:', SubmittedJob)
   }
-
-  const handleClearCategories = (cate) => {
-    setJobDetails({ ...jobDetails, categories: [] });
-  };
-
-  const filteredCategories = availableCategories.filter(cat =>
-    cat.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className="container">
@@ -66,26 +47,23 @@ const JobManagementCategory = () => {
 
         {filteredCategories.length === 0
          ? (<p>No results found</p>)
-         : (filteredCategories.map((cat) => {
-           const isSelected = jobDetails.categories.includes(cat);
+         : (filteredCategories.map((cat) => (
 
-          return (
             <button
               key={cat}
               type="button"
               onClick={() => handleCategoryToggle(cat)}
-              className={`category-btn ${isSelected ? 'selected' : ''}`}
+              className={`category-btn ${categories.includes(cat) ? 'selected' : ''}`}
             >
               {cat}
             </button>
-          );
-        })
+          ))
       )}
 
       <div>
         <h3>Selected category:</h3>
-        {jobDetails.categories.length > 0 ? (
-          jobDetails.categories.map((cat) => (
+        {categories.length > 0 ? (
+          categories.map((cat) => (
             <span key={cat} className="selected-category">
               {cat}
             </span>
