@@ -1,6 +1,7 @@
-import { useState } from "react";
+
 import useCategorySelection from "./useCategorySelection";
 import './JobManagementCategory.css'
+import JobForm from "./JobForm";
 
 const JobManagementCategory = () => {
   const {
@@ -14,37 +15,30 @@ const JobManagementCategory = () => {
     filteredCategories
   } = useCategorySelection();
 
-  const [jobDetails, setJobDetails] = useState({
-    title: "",
-    description: "",
-    location: "",
-    salary: "",
-  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (jobData) => {
 
     if (categories.length === 0) {
       setError('Please select at least on category before submitting')
       return;//
     }
     setError('');
-
-    const SubmittedJob = {...jobDetails, categories };
-    console.log('Submitted Job Details:', SubmittedJob)
-  }
+    console.log('Submitted Job Details:', jobData)
+  };
 
   return (
     <div className="container">
       <h1>Module 6 / Lesson 1</h1>
       <h2>Job Management - Categories</h2>
 
+      {/* Search Box */}
       <input className="search-item"
         type="text"
         placeholder="Search Category..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)} />
 
+        {/* category List */}
         {filteredCategories.length === 0
          ? (<p>No results found</p>)
          : (filteredCategories.map((cat) => (
@@ -73,10 +67,9 @@ const JobManagementCategory = () => {
         )}
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <button type="submit">submit</button>
-        {error && <p className="error-text">{error}</p>}
-      </form>
+      <JobForm categories={categories} onSubmit={handleSubmit}/>
+
+      {error && <p className="error-text">{error}</p>}
 
       <button type="button" onClick={() => handleClearCategories()}>Clear Categories</button>
     </div>

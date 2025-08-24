@@ -1,13 +1,14 @@
 import { useState } from 'react'
 
-const useCategorySelection = () => {
+const useCategorySelection = (
+    availableCategories = ["IT", "Design", "Marketing", "Finance"]
+) => {
 
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
-    const availableCategories = ["IT", "Design", "Marketing", "Finance"]; //
-
+    //select / remove category
     const handleCategoryToggle = (category) => {
         const isSelected = categories.includes(category);
 
@@ -24,21 +25,12 @@ const useCategorySelection = () => {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (categories.length === 0) {
-            setError('Please select at least one category before submitting')
-            return;
-        }
-        setError('');
-        console.log('Submitted Job Details:', categories);
-    }
-
+     //remove all category
     const handleClearCategories = (cate) => {
         setCategories([]);
     };
 
+    //search inside category
     const filteredCategories = availableCategories.filter(cat =>
         cat.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -48,12 +40,11 @@ const useCategorySelection = () => {
         error,
         setError,
         searchTerm,
-        handleSubmit,
         setSearchTerm,
         handleCategoryToggle,
         handleClearCategories,
-        filteredCategories
+        filteredCategories,
     };
-}
+};
 
-export default useCategorySelection
+export default useCategorySelection;
