@@ -14,6 +14,7 @@ import JobForm from "./ComponentModule5/Lesson1/JobForm";// Module 5/ Lesson 1
 import MainJob from "./ComponentModule5/Lesson3/MainJob";// Module 5/ Lesson 3
 import JobManagement from "./ComponentModule5/Lesson4/JobManagement"; //Module 5/ Lesson 4
 import JobManagementCategory from './ComponentModule6/Lesson1/JobManagementCategory'; // Module 6/ Lesson 1
+import CategorySelector from "./ComponentModule6/Lesson2/CategorySelector";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
       <MainJob/>
       <JobManagement/>
       <JobManagementCategory />
+      <CategorySelector/>
     </div>
   );
 }
