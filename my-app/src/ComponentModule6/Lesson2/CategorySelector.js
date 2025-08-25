@@ -28,7 +28,7 @@ const CategorySelector = () => {
     };
 
     return (
-        <div style={{ border: '1px solid red', margin: '10px', padding: '10px'}}>
+        <div style={{ border: '1px solid red', margin: '10px', padding: '10px' }}>
             <h1>Module 6 / Lesson 2</h1>
 
             <button
@@ -36,21 +36,21 @@ const CategorySelector = () => {
                 // when clicked, update state to "readEmail"
                 onClick={() => handleCategoryClick('readEmail')}
                 // style changes depending on whether this category is selected
-                style={validateCategory('readEmail') ? categoryStyles.readEmail : categoryStyles.default}>
+                style={{ ...validateCategory('readEmail') ? categoryStyles.readEmail : categoryStyles.default, transition: 'background-color 0.9s ease' }}>
                 Read Email
             </button>
 
             <button
                 type="button"
                 onClick={() => handleCategoryClick('sendEmail')}
-                style={validateCategory('sendEmail') ? categoryStyles.sendEmail : categoryStyles.default} >
+                style={{ ...validateCategory('sendEmail') ? categoryStyles.sendEmail : categoryStyles.default, transition: 'background-color 0.9s ease' }} >
                 Send Email
             </button>
 
             <button
                 type="button"
                 onClick={() => handleCategoryClick('webParsing')}
-                style={validateCategory('webParsing') ? categoryStyles.webParsing : categoryStyles.default}>
+                style={{ ...validateCategory('webParsing') ? categoryStyles.webParsing : categoryStyles.default, transition: 'background-color 0.9s ease' }}>
                 Web Parsing
             </button>
 
@@ -63,6 +63,12 @@ const CategorySelector = () => {
                     </p>
                 )}
             </div>
+
+            <button
+                type="button"
+                onClick={() => handleCategoryClick('')}>
+                Reset
+            </button>
 
         </div>
     );
