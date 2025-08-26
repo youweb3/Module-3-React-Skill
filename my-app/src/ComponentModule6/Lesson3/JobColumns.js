@@ -1,15 +1,18 @@
 import React from 'react'
+import JobCard from './JobCard';
 
 const JobColumns = ({ title, status, jobs }) => {
+  // Filter jobs that match this column's status
   const filteredJobs = jobs.filter(job => job.status === status)
+  
   return (
     <div>
       <h2>{title}</h2>
-      <ul>
-        {filteredJobs.map((job, index) => (
-          <div key={index}>{job.activity}</div>
-        ))}
-      </ul>
+
+      {filteredJobs.map((job, index) => (
+        <JobCard key={index} job={job} />
+      ))}
+
     </div>
   );
 };

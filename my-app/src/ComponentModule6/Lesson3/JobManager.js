@@ -4,17 +4,28 @@ import JobColumns from './JobColumns';
 const JobManager = () => {
     const [jobs, setJobs] = useState([]);
     const [activity, setActivity] = useState('');
-    const [categories, setCategories] = useState('');
-    const [status, setStatus] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [status, setStatus] = useState('');
+
+    const categoriesList = ["Read Emails", "Send Emails", "Web Parsing"];
 
     const addJob = (e) => {
         e.preventDefault();
+        if (!activity || !status) return;
         const newJob = { activity, categories, status };
         setJobs(prevJobs => [...prevJobs, newJob]);
 
         setActivity('');
-        setCategories('');
+        setCategories([]);
         setStatus('');
+    };
+
+    const handleCategoryChange = (cat) => {
+        if (categories.includes(cat)) {
+            setCategories(categories.filter(c => c !== cat));
+        } else {
+            setCategories([...categories, cat]);
+        }
     };
 
 
@@ -28,6 +39,20 @@ const JobManager = () => {
                     <option value='In Progress'>In Progress</option>
                     <option value='Completed'>Completed</option>
                 </select>
+                <div>
+                    <p>Select Categories:</p>
+                    {categoriesList.map((cat) => (
+                        <label key={cat}>
+                            <input type='checkbox'
+                                value={cat}
+                                checked={categories.includes(cat)}
+                                onChange={() => handleCategoryChange(cat)}
+                            >
+                            </input>
+                            {cat}
+                        </label>
+                    ))}
+                </div>
                 <button type='submit'>Add Job</button>
             </form>
             <div className='job-columns'>
