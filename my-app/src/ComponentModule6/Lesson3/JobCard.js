@@ -1,6 +1,6 @@
 import React from 'react'
 
-const JobCard = ({job}) => {
+const JobCard = ({job, onEdit}) => {
   return (
     <div className='job-card'>
         <h3 className='jobCard-title'>{job.activity}</h3>
@@ -11,6 +11,7 @@ const JobCard = ({job}) => {
                 </span>
             ))}
         </div>
+        <button  className='category'  onClick={onEdit}>Edit</button>
     </div>
   )
 }

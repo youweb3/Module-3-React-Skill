@@ -1,7 +1,7 @@
 import React from 'react'
 import JobCard from './JobCard';
 
-const JobColumns = ({ title, status, jobs }) => {
+const JobColumns = ({ title, status, jobs, onEdit }) => {
   // Filter jobs that match this column's status
   const filteredJobs = jobs.filter(job => job.status === status)
   
@@ -10,7 +10,7 @@ const JobColumns = ({ title, status, jobs }) => {
       <h2>{title}</h2>
 
       {filteredJobs.map((job, index) => (
-        <JobCard key={index} job={job} />
+        <JobCard key={index} job={job} onEdit={() => onEdit(index)} />
       ))}
 
     </div>

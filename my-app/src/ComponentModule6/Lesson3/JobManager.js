@@ -12,6 +12,9 @@ const JobManager = () => {
     // State for job status (single choice)
     const [status, setStatus] = useState('');
 
+    const [editingIndex, setEditingIndex] = useState(null);
+
+
     // List of available categories for checkboxes
     const categoriesList = ["Read Emails", "Send Emails", "Web Parsing"];
 
@@ -19,8 +22,17 @@ const JobManager = () => {
     const addJob = (e) => {
         e.preventDefault(); // prevent page reload
         if (!activity || !status) return;// Simple validation: ignore if activity or status is empty
-        const newJob = { activity, categories, status };// Create a new job object
-        setJobs(prevJobs => [...prevJobs, newJob]);// Add the new job to the jobs array
+
+        if (editingIndex !== null) {
+            const updatedJobs = [...jobs];
+            updatedJobs[editingIndex] = { activity, categories, status };
+            setJobs(updatedJobs);
+            setEditingIndex(null);
+            
+        } else {
+            const newJob = { activity, categories, status };// Create a new job object
+            setJobs(prevJobs => [...prevJobs, newJob]);// Add the new job to the jobs array
+        }
 
         setActivity('');
         setCategories([]);
@@ -36,6 +48,14 @@ const JobManager = () => {
         }
     };
 
+    const handleEdit = (index) => {
+        const job = jobs[index];
+        setActivity(job.activity);
+        setCategories(job.categories);
+        setStatus(job.status);
+        setEditingIndex(index);
+    };
+
 
     return (
         <div className="job-manager">
@@ -48,7 +68,7 @@ const JobManager = () => {
                     <option value='Completed'>Completed</option>
                 </select>
 
-                 {/* Checkboxes for multiple categories */}
+                {/* Checkboxes for multiple categories */}
                 <div>
                     <p>Select Categories:</p>
                     {categoriesList.map((cat) => (
@@ -66,9 +86,9 @@ const JobManager = () => {
                 <button type='submit'>Add Job</button>
             </form>
             <div className='job-columns'>
-                <JobColumns title='Need to Complete' status='Need to Complete' jobs={jobs} />
-                <JobColumns title='In Progress' status='In Progress' jobs={jobs} />
-                <JobColumns title='Completed' status='Completed' jobs={jobs} />
+                <JobColumns title='Need to Complete' status='Need to Complete' jobs={jobs} onEdit={handleEdit} />
+                <JobColumns title='In Progress' status='In Progress' jobs={jobs} onEdit={handleEdit}/>
+                <JobColumns title='Completed' status='Completed' jobs={jobs} onEdit={handleEdit}/>
             </div>
 
         </div>
