@@ -1,36 +1,44 @@
 import React, { useState } from 'react'
 import JobColumns from './JobColumns';
+import './JobManager.css';
 
 const JobManager = () => {
+    // State for all jobs
     const [jobs, setJobs] = useState([]);
+    // State for the job's activity input
     const [activity, setActivity] = useState('');
+    // State for selected categories (array)
     const [categories, setCategories] = useState([]);
+    // State for job status (single choice)
     const [status, setStatus] = useState('');
 
+    // List of available categories for checkboxes
     const categoriesList = ["Read Emails", "Send Emails", "Web Parsing"];
 
+    // Function to add a new job when form is submitted
     const addJob = (e) => {
-        e.preventDefault();
-        if (!activity || !status) return;
-        const newJob = { activity, categories, status };
-        setJobs(prevJobs => [...prevJobs, newJob]);
+        e.preventDefault(); // prevent page reload
+        if (!activity || !status) return;// Simple validation: ignore if activity or status is empty
+        const newJob = { activity, categories, status };// Create a new job object
+        setJobs(prevJobs => [...prevJobs, newJob]);// Add the new job to the jobs array
 
         setActivity('');
         setCategories([]);
         setStatus('');
     };
 
+    // Function to handle checkbox changes for categories
     const handleCategoryChange = (cat) => {
-        if (categories.includes(cat)) {
+        if (categories.includes(cat)) { // if category is already selected, remove it
             setCategories(categories.filter(c => c !== cat));
-        } else {
+        } else {  // if category not selected, add it
             setCategories([...categories, cat]);
         }
     };
 
 
     return (
-        <div>
+        <div className="job-manager">
             <form onSubmit={addJob}>
                 <input type='text' placeholder='Enter Job' value={activity} onChange={(e) => setActivity(e.target.value)} />
                 <select value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -39,6 +47,8 @@ const JobManager = () => {
                     <option value='In Progress'>In Progress</option>
                     <option value='Completed'>Completed</option>
                 </select>
+
+                 {/* Checkboxes for multiple categories */}
                 <div>
                     <p>Select Categories:</p>
                     {categoriesList.map((cat) => (

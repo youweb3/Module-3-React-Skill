@@ -6,7 +6,7 @@ const JobColumns = ({ title, status, jobs }) => {
   const filteredJobs = jobs.filter(job => job.status === status)
   
   return (
-    <div>
+    <div className='job-column'>
       <h2>{title}</h2>
 
       {filteredJobs.map((job, index) => (
