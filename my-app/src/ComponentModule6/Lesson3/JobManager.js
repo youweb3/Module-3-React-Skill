@@ -25,12 +25,17 @@ const JobManager = () => {
 
         if (editingIndex !== null) {
             const updatedJobs = [...jobs];
-            updatedJobs[editingIndex] = { activity, categories, status };
+            updatedJobs[editingIndex] = { ...updatedJobs[editingIndex], activity, categories, status };
             setJobs(updatedJobs);
             setEditingIndex(null);
-            
-        } else {
-            const newJob = { activity, categories, status };// Create a new job object
+
+        } else {// Create a new job object
+            const newJob = {
+                id: Date.now(),
+                activity,
+                categories,
+                status
+            };
             setJobs(prevJobs => [...prevJobs, newJob]);// Add the new job to the jobs array
         }
 
@@ -56,6 +61,13 @@ const JobManager = () => {
         setEditingIndex(index);
     };
 
+    // Handle drop event: update job status after drag-and-drop
+    // We use job.id instead of index to ensure stability.
+    const handleDropJob = (id, newStatus) => {
+        setJobs((prevJobs) => prevJobs.map((job) =>
+            job.id === Number(id) ? { ...job, status: newStatus } : job)
+        );
+    };
 
     return (
         <div className="job-manager">
@@ -86,9 +98,9 @@ const JobManager = () => {
                 <button type='submit'>Add Job</button>
             </form>
             <div className='job-columns'>
-                <JobColumns title='Need to Complete' status='Need to Complete' jobs={jobs} onEdit={handleEdit} />
-                <JobColumns title='In Progress' status='In Progress' jobs={jobs} onEdit={handleEdit}/>
-                <JobColumns title='Completed' status='Completed' jobs={jobs} onEdit={handleEdit}/>
+                <JobColumns title='Need to Complete' status='Need to Complete' jobs={jobs} onEdit={handleEdit} onDropJob={handleDropJob} />
+                <JobColumns title='In Progress' status='In Progress' jobs={jobs} onEdit={handleEdit} onDropJob={handleDropJob} />
+                <JobColumns title='Completed' status='Completed' jobs={jobs} onEdit={handleEdit} onDropJob={handleDropJob} />
             </div>
 
         </div>
@@ -96,3 +108,9 @@ const JobManager = () => {
 };
 
 export default JobManager;
+
+
+// We use `id` (not index) for drag-and-drop:
+// Index can change if jobs are added/removed.
+// id is stable and always points to the same job.
+// This way we always update the correct job when moving between columns.

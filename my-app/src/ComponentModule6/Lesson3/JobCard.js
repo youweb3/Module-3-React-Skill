@@ -1,8 +1,11 @@
 import React from 'react'
 
-const JobCard = ({job, onEdit}) => {
+const JobCard = ({job, onEdit, index}) => {
   return (
-    <div className='job-card'>
+    <div className='job-card'
+     draggable
+     onDragStart={(e) => e.dataTransfer.setData('id', job.id)}
+    >
         <h3 className='jobCard-title'>{job.activity}</h3>
         <div>
             {job.categories.map((category, index) => (
