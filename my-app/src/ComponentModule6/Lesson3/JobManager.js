@@ -14,6 +14,8 @@ const JobManager = () => {
 
     const [editingIndex, setEditingIndex] = useState(null);
 
+    const [searchItem, setSearchItem] = useState('') //state for search input
+
 
     // List of available categories for checkboxes
     const categoriesList = ["Read Emails", "Send Emails", "Web Parsing"];
@@ -69,6 +71,11 @@ const JobManager = () => {
         );
     };
 
+    const searchs = jobs.filter((job) =>
+        job.activity.toLowerCase().includes(searchItem.toLowerCase()) ||
+        job.categories.some((cat) => cat.toLowerCase().includes(searchItem.toLowerCase()))
+    );
+
     return (
         <div className="job-manager">
             <form onSubmit={addJob}>
@@ -97,10 +104,18 @@ const JobManager = () => {
                 </div>
                 <button type='submit'>Add Job</button>
             </form>
+
+            <div>
+                <input type='text' placeholder='search by activity or category'
+                value={searchItem}
+                onChange={(e) => setSearchItem(e.target.value)}/>
+            </div>
+
+
             <div className='job-columns'>
-                <JobColumns title='Need to Complete' status='Need to Complete' jobs={jobs} onEdit={handleEdit} onDropJob={handleDropJob} />
-                <JobColumns title='In Progress' status='In Progress' jobs={jobs} onEdit={handleEdit} onDropJob={handleDropJob} />
-                <JobColumns title='Completed' status='Completed' jobs={jobs} onEdit={handleEdit} onDropJob={handleDropJob} />
+                <JobColumns title='Need to Complete' status='Need to Complete' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} />
+                <JobColumns title='In Progress' status='In Progress' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} />
+                <JobColumns title='Completed' status='Completed' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} />
             </div>
 
         </div>
