@@ -24,9 +24,18 @@ const JobManager = () => {
         e.preventDefault(); // prevent page reload
         if (!activity || !status) return;// Simple validation: ignore if activity or status is empty
 
+
+        //Update job when editing
+        // - We use job.id === editingIndex to find the correct job
+        // - Replace its fields with the latest values from state (activity, categories, status)
+        // - We spread [...categories] to make sure a fresh array is saved (avoid mutating state directly)
+        // - If editingIndex is null, we create a new job with a unique id (Date.now())
         if (editingIndex !== null) {
-            const updatedJobs = [...jobs];
-            updatedJobs[editingIndex] = { ...updatedJobs[editingIndex], activity, categories, status };
+            const updatedJobs = jobs.map((job) =>
+                job.id === editingIndex
+                    ? { ...job, activity: activity, categories: [...categories], status: status, }
+                    : job
+            );
             setJobs(updatedJobs);
             setEditingIndex(null);
 
@@ -45,12 +54,12 @@ const JobManager = () => {
         setStatus('');
     };
 
-    const handleEdit = (index) => {
-        const job = jobs[index];
+    const handleEdit = (id) => {
+        const job = jobs.find((i) => i.id === id);
         setActivity(job.activity);
         setCategories(job.categories);
         setStatus(job.status);
-        setEditingIndex(index);
+        setEditingIndex(id);
     };
 
     // Handle drop event: update job status after drag-and-drop
@@ -69,17 +78,18 @@ const JobManager = () => {
     return (
         <div className="job-manager">
 
-            <JobForms 
-            addJob={addJob} 
-            activity={activity}
-            setActivity={setActivity}
-            categories={categories}
-            setCategories={setCategories}
-            status={status}
-            setStatus={setStatus}
+            <JobForms
+                addJob={addJob}
+                activity={activity}
+                setActivity={setActivity}
+                categories={categories}
+                setCategories={setCategories}
+                status={status}
+                setStatus={setStatus}
+                editingIndex={editingIndex}
             />
 
-            <SearchJobs searchItem={searchItem} setSearchItem={setSearchItem}/>
+            <SearchJobs searchItem={searchItem} setSearchItem={setSearchItem} />
 
 
             <div className='job-columns'>

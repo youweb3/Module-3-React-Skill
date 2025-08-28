@@ -16,7 +16,7 @@ const JobColumns = ({ title, status, jobs, onEdit, onDropJob }) => {
       <h2>{title}</h2>
 
       {filteredJobs.map((job, index) => (
-        <JobCard key={index} job={job} onEdit={() => onEdit(index)} />
+        <JobCard key={job.id} job={job} onEdit={() => onEdit(job.id)} />
       ))}
 
     </div>

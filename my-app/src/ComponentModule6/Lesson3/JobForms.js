@@ -1,7 +1,7 @@
 import React from "react";
 
-const JobForms = ({addJob, activity, setActivity, status, setStatus, categories, setCategories,}) => {
-    
+const JobForms = ({addJob, activity, setActivity, status, setStatus, categories, setCategories, editingIndex}) => {
+
     // List of available categories for checkboxes
     const categoriesList = ["Read Emails", "Send Emails", "Web Parsing"];
 
@@ -46,7 +46,7 @@ const JobForms = ({addJob, activity, setActivity, status, setStatus, categories,
                     </label>
                 ))}
             </div>
-            <button type="submit">Add Job</button>
+            <button type="submit">{editingIndex !== null ? "Update Job" : "Add Job"}</button>
         </form>
     );
 };
