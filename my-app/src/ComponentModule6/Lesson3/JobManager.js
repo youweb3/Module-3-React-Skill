@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import JobColumns from './JobColumns';
+import JobForms from './JobForms';
+import SearchJobs from './SearchJobs';
 import './JobManager.css';
 
 const JobManager = () => {
@@ -16,9 +18,6 @@ const JobManager = () => {
 
     const [searchItem, setSearchItem] = useState('') //state for search input
 
-
-    // List of available categories for checkboxes
-    const categoriesList = ["Read Emails", "Send Emails", "Web Parsing"];
 
     // Function to add a new job when form is submitted
     const addJob = (e) => {
@@ -46,15 +45,6 @@ const JobManager = () => {
         setStatus('');
     };
 
-    // Function to handle checkbox changes for categories
-    const handleCategoryChange = (cat) => {
-        if (categories.includes(cat)) { // if category is already selected, remove it
-            setCategories(categories.filter(c => c !== cat));
-        } else {  // if category not selected, add it
-            setCategories([...categories, cat]);
-        }
-    };
-
     const handleEdit = (index) => {
         const job = jobs[index];
         setActivity(job.activity);
@@ -78,38 +68,18 @@ const JobManager = () => {
 
     return (
         <div className="job-manager">
-            <form onSubmit={addJob}>
-                <input type='text' placeholder='Enter Job' value={activity} onChange={(e) => setActivity(e.target.value)} />
-                <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                    <option value=''>Select Status</option>
-                    <option value='Need to Complete'>Need to Complete</option>
-                    <option value='In Progress'>In Progress</option>
-                    <option value='Completed'>Completed</option>
-                </select>
 
-                {/* Checkboxes for multiple categories */}
-                <div>
-                    <p>Select Categories:</p>
-                    {categoriesList.map((cat) => (
-                        <label key={cat}>
-                            <input type='checkbox'
-                                value={cat}
-                                checked={categories.includes(cat)}
-                                onChange={() => handleCategoryChange(cat)}
-                            >
-                            </input>
-                            {cat}
-                        </label>
-                    ))}
-                </div>
-                <button type='submit'>Add Job</button>
-            </form>
+            <JobForms 
+            addJob={addJob} 
+            activity={activity}
+            setActivity={setActivity}
+            categories={categories}
+            setCategories={setCategories}
+            status={status}
+            setStatus={setStatus}
+            />
 
-            <div>
-                <input type='text' placeholder='search by activity or category'
-                value={searchItem}
-                onChange={(e) => setSearchItem(e.target.value)}/>
-            </div>
+            <SearchJobs searchItem={searchItem} setSearchItem={setSearchItem}/>
 
 
             <div className='job-columns'>
