@@ -12,7 +12,7 @@ const JobManagement = () => {
   //   { id: 3, title: "Generate Report", status: "Completed" },
   // ]);
   const [jobs, setJobs] = useState(() => { // we use lazy initialization to load jobs from localStorage just read it once when the component mounts
-    const savedJobs = localStorage.getItem("jobs");
+    const savedJobs = localStorage.getItem("jobs-module5/4");
     return savedJobs ? JSON.parse(savedJobs) : [
       { id: 1, title: "Parse Emails", status: "Need to Start" },
       { id: 2, title: "SAP Extraction", status: "In Progress" },
@@ -21,7 +21,7 @@ const JobManagement = () => {
   });
   // useEffect to update localStorage whenever jobs change
   useEffect(() => {
-    localStorage.setItem("jobs", JSON.stringify(jobs));
+    localStorage.setItem("jobs-module5/4", JSON.stringify(jobs));
   }, [jobs]);// Whenever jobs change, update localStorage with the new jobs array
 
   const [searchItem, setSearchItem] = useState('');// state for search input, just for hold anything type in input

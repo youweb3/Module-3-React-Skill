@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import JobColumns from './JobColumns';
 import JobForms from './JobForms';
 import SearchJobs from './SearchJobs';
@@ -18,6 +18,19 @@ const JobManager = () => {
 
     const [searchItem, setSearchItem] = useState('') //state for search input
 
+    //Load from localStorage on first render
+    useEffect(() => {
+        const savedJobs = localStorage.getItem('jobs-module6/3');
+        if (savedJobs) setJobs(JSON.parse(savedJobs));
+
+    }, []);
+
+    //Save to localStorage whenever jobs change
+    useEffect(() => {
+        if (jobs.length > 0) {
+            localStorage.setItem('jobs-module6/3', JSON.stringify(jobs));
+        }
+    }, [jobs]);
 
     // Function to add a new job when form is submitted
     const addJob = (e) => {
