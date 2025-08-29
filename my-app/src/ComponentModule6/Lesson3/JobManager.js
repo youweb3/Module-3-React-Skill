@@ -75,6 +75,10 @@ const JobManager = () => {
         job.categories.some((cat) => cat.toLowerCase().includes(searchItem.toLowerCase()))
     );
 
+    const deleteJob = (jobId) => {
+        setJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId))
+    };
+
     return (
         <div className="job-manager">
 
@@ -93,9 +97,9 @@ const JobManager = () => {
 
 
             <div className='job-columns'>
-                <JobColumns title='Need to Complete' status='Need to Complete' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} />
-                <JobColumns title='In Progress' status='In Progress' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} />
-                <JobColumns title='Completed' status='Completed' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} />
+                <JobColumns title='Need to Complete' status='Need to Complete' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} onDelete={deleteJob} />
+                <JobColumns title='In Progress' status='In Progress' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} onDelete={deleteJob} />
+                <JobColumns title='Completed' status='Completed' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} onDelete={deleteJob} />
             </div>
 
         </div>
