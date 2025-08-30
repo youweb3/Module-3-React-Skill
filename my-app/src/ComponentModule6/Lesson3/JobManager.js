@@ -89,7 +89,10 @@ const JobManager = () => {
     );
 
     const deleteJob = (jobId) => {
-        setJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId))
+        const confirmed = window.confirm("Are you sure you want to delete this job?");
+        if (confirmed) {
+            setJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId))
+        }
     };
 
     return (
