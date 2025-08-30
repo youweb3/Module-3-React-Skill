@@ -3,7 +3,11 @@ import JobCard from './JobCard';
 
 const JobColumns = ({ title, status, jobs, onEdit, onDropJob, onDelete }) => {
   // Filter jobs that match this column's status
-  const filteredJobs = jobs.filter(job => job.status === status)
+  const filteredJobs = jobs.filter(job => job.status === status);
+
+  const sortedJobs = [...filteredJobs].sort((a, b) => new Date (b.createdAt) - new Date (a.createdAt)
+  );
+
 
   return (
     <div className='job-column'
@@ -15,7 +19,7 @@ const JobColumns = ({ title, status, jobs, onEdit, onDropJob, onDelete }) => {
     >
       <h2>{title}</h2>
 
-      {filteredJobs.map((job) => (
+      {sortedJobs.map((job) => (
         <JobCard key={job.id} job={job} onEdit={() => onEdit(job.id)} onDelete={() => onDelete(job.id)} />
       ))}
 

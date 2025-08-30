@@ -59,7 +59,8 @@ const JobManager = () => {
                 id: Date.now(),
                 activity,
                 categories,
-                status
+                status,
+                createdAt: new Date().toISOString() // Job creation time
             };
             setJobs(prevJobs => [...prevJobs, newJob]);// Add the new job to the jobs array
         }
