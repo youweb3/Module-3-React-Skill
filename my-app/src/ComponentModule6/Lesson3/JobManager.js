@@ -29,6 +29,8 @@ const JobManager = () => {
     useEffect(() => {
         if (jobs.length > 0) {
             localStorage.setItem('jobs-module6/3', JSON.stringify(jobs));
+        } else {
+            localStorage.removeItem("jobs-module6/3");
         }
     }, [jobs]);
 
@@ -95,6 +97,15 @@ const JobManager = () => {
         }
     };
 
+    //clear all job
+    const clearAllJobs = () => {
+        const confirmed = window.confirm("Are you sure you want to clear all jobs?");
+        if (confirmed) {
+            setJobs([]); //empty state
+            localStorage.removeItem('"jobs-module6/3"');// remove localStorage
+        }
+    };
+
     return (
         <div className="job-manager">
 
@@ -111,6 +122,9 @@ const JobManager = () => {
 
             <SearchJobs searchItem={searchItem} setSearchItem={setSearchItem} />
 
+            <button type="button" className="clear-all-btn" onClick={clearAllJobs}>
+                Clear All Jobs
+            </button>
 
             <div className='job-columns'>
                 <JobColumns title='Need to Complete' status='Need to Complete' jobs={searchs} onEdit={handleEdit} onDropJob={handleDropJob} onDelete={deleteJob} />

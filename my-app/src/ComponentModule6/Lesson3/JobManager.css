@@ -45,3 +45,17 @@
     cursor: pointer;
     width: 86px;
 }
+
+.clear-all-btn {
+  padding: 8px 16px;
+  margin: 10px 0;
+  background-color: #bf0e11;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clear-all-btn:hover {
+  opacity: 0.8;
+}
